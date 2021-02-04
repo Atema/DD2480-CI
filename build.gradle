@@ -12,6 +12,10 @@ jar {
     }
 }
 
+javadoc {
+    source = sourceSets.main.allJava + sourceSets.test.allJava
+}
+
 repositories {
     jcenter()
 }
