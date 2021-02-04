@@ -32,3 +32,5 @@ test {
 		events "passed", "skipped", "failed"
 	}
 }
+
+tasks.getByName('build').dependsOn javadoc
