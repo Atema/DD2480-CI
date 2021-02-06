@@ -1,4 +1,9 @@
 import static org.junit.jupiter.api.Assertions.assertTrue;
+
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -10,12 +15,7 @@ public class BuildTests {
 	@Test
 	void cloneRepoTest(){
 		Build b = new Build();
-		b.cloneRepo();
-		try{
-			b.cloneRepo();
-		}
-		catch (Exception e) {
-            assertTrue(e.getMessage().contains("not an empty directory"));
-		}
+		Path path = Paths.get(b.cloneRepo());
+		assertTrue(Files.exists(path));
 	}
 }
