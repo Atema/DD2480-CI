@@ -9,5 +9,3 @@
 # Exclude build folders
 build/
 bin/
-
-DD2480-CI/
