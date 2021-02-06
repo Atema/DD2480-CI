@@ -24,9 +24,13 @@ dependencies {
     implementation 'org.eclipse.jetty:jetty-server:11.0.0'
     implementation 'org.eclipse.jetty:jetty-servlet:11.0.0'
     implementation 'org.slf4j:slf4j-simple:1.8.0-beta4'
+    // implementation 'org.eclipse.jgit:org.eclipse.jgit:5.4.2.201908231537-r'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+
+    // https://mvnrepository.com/artifact/org.eclipse.jgit/org.eclipse.jgit
+    compile group: 'org.eclipse.jgit', name: 'org.eclipse.jgit', version: '4.8.0.201706111038-r'
 }
 
 test {

@@ -19,26 +19,16 @@ public class Build {
     /**
      * Clones the specified repository branch into a local folder to prepare testing
      */
-    public String cloneRepo() {
+    public String cloneRepo() throws GitAPIException, JGitInternalException, IOException {
         String repoUrl = "https://github.com/Atema/DD2480-CI.git";
-        try {
-            Path p = Files.createTempDirectory("repo");
-            System.out.println("Cloning " + repoUrl + " into " + p.toString());
-            Git.cloneRepository().setURI(repoUrl)
-                    .setDirectory(p.toFile())
-                    // .setDirectory(Paths.get(cloneDirectoryPath).toFile())
-                    .call();
-            System.out.println("Completed Cloning");
-            return p.toString();
-        } catch (JGitInternalException e){
-            System.out.println("Repo alreay cloned");
-        }catch (GitAPIException e) {
-            System.out.println("Exception occurred while cloning repo");
-            e.printStackTrace();
-        }catch (IOException e){
-            System.out.println("failded to create the folder");
-        }
-        return "";
+        Path p = Files.createTempDirectory("repo");
+        System.out.println("Cloning " + repoUrl + " into " + p.toString());
+        Git.cloneRepository().setURI(repoUrl)
+                .setDirectory(p.toFile())
+                // .setDirectory(Paths.get(cloneDirectoryPath).toFile())
+                .call();
+        System.out.println("Completed Cloning");
+        return p.toString();
     }
 
     /**
@@ -46,7 +36,7 @@ public class Build {
      *
      * @return The results of the build
      */
-    public BuildResult build() {
+    public BuildResult build() throws GitAPIException, JGitInternalException, IOException{
         cloneRepo();
 
         // ...
