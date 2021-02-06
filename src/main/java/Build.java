@@ -18,6 +18,13 @@ public class Build {
 
     /**
      * Clones the specified repository branch into a local folder to prepare testing
+     *
+     * @throws GitAPIException if an error occured while cloning the repo
+     * @throws JGitInternalException if the repo is already cloned for example
+     * @throws IOException if the temp folder cannot be created
+     *
+     * @return The string corresponding to the path where the repo have been cloned
+     *
      */
     public String cloneRepo() throws GitAPIException, JGitInternalException, IOException {
         String repoUrl = "https://github.com/Atema/DD2480-CI.git";
@@ -33,6 +40,10 @@ public class Build {
 
     /**
      * Runs the gradle build process (including tests)
+     *
+     * @throws GitAPIException throw by cloneRepo
+     * @throws JGitInternalException throw by cloneRepo
+     * @throws IOException throw by cloneRepo
      *
      * @return The results of the build
      */
