@@ -3,8 +3,10 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
 import java.io.IOException;
+import java.util.stream.Collectors;
 
 import jakarta.servlet.ServletException;
+import org.json.*;
 
 /**
  * Servlet that handles build requests (on /request) that are triggered by GitHub
@@ -21,5 +23,23 @@ public class BuildRequestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Process the request payload and feed to Build
+
+        if(req.getMethod() == "POST"){
+            String reqData = req.getReader().lines().collect(Collectors.joining());
+            JSONObject reqObject = new JSONObject(reqData);
+            String branchRef = reqObject.getString("ref");            
+            JSONArray commitArray = reqObject.getJSONArray("commits");
+            String id = commitArray.getJSONObject(0).getString("id");
+            String url = reqObject.getJSONObject("repository").getString("html_url");
+            String nameAuthor = commitArray.getJSONObject(0).getJSONObject("author").getString("name");
+            String emailAuthor = commitArray.getJSONObject(0).getJSONObject("author").getString("email");
+            String date = commitArray.getJSONObject(0).getString("timestamp");
+
+            Build build = New Build();
+
+
+
+
+        }
     }
 }
