@@ -33,9 +33,9 @@ public class BuildRequestServlet extends HttpServlet {
             String url = reqObject.getJSONObject("repository").getString("html_url");
             String nameAuthor = commitArray.getJSONObject(0).getJSONObject("author").getString("name");
             String emailAuthor = commitArray.getJSONObject(0).getJSONObject("author").getString("email");
-            String date = commitArray.getJSONObject(0).getString("timestamp");
+            String timeStamp = commitArray.getJSONObject(0).getString("timestamp");
 
-            Build build = New Build();
+            Build build = New Build(branchRef,id,url,nameAuthor,emailAuthor,timeStamp);
 
 
 
