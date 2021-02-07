@@ -25,6 +25,7 @@ public class BuildResult {
     public BuildResult(Build build, GitMessages buildStatus) {
         this.build = build;
         this.buildStatus = buildStatus;
+
     }
 
     /**
