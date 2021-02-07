@@ -27,6 +27,7 @@ public class CIServer {
         server.setHandler(servletHandler);
 
         servletHandler.addServlet(new ServletHolder(BuildRequestServlet.class), "/request");
+        servletHandler.addServlet(new ServletHolder(BuildHistoryServlet.class), "/");
 
 
         server.setHandler(new HandlerList(new Handler[] { staticCtxHandler, servletHandler, new DefaultHandler() }));
