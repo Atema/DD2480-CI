@@ -2,7 +2,6 @@
  * Contains information needed for the build and methods for building
  */
 public class Build { 
-    String reqData;
     String branchRef;
     String id;
     String url;
@@ -13,11 +12,11 @@ public class Build {
     /**
      * Constructs with properties about what (branch) to clone and build
      */
-    public Build(String reqData,String branchRef,String id,String url,String nameAuthor,
+    public Build(String branchRef,String id,String url,String nameAuthor,
     String emailAuthor,String timeStamp) {
-        this.reqData = reqData;
         this.branchRef = branchRef;
         this.id = id;
+        this.url = url;
         this.nameAuthor = nameAuthor;
         this.emailAuthor = emailAuthor;
         this.timeStamp = timeStamp;

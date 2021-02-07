@@ -23,6 +23,8 @@ public class BuildRequestServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         // Process the request payload and feed to Build
+        resp.setContentType("text/html;charset=utf-8");
+        resp.setStatus(HttpServletResponse.SC_OK);
 
         if(req.getMethod() == "POST"){
             String reqData = req.getReader().lines().collect(Collectors.joining());
