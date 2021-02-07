@@ -51,6 +51,9 @@ public class BuildHistoryServlet extends HttpServlet {
             dataModel.put("id", buildId);
             dataModel.put("repo", "Atema/DD2480-CI");
             dataModel.put("branch", "main");
+            dataModel.put("status", "passed");
+            dataModel.put("time", "07/02/2021, 17:12");
+            dataModel.put("commit", "d89e0a8a13c304b07093b4d60402c4f3afb45fc5");
             dataModel.put("log", "BLALALABLABLABLABLA");
         } else {
             dataModel.put("buildSelected", false);
@@ -64,15 +67,25 @@ public class BuildHistoryServlet extends HttpServlet {
         build1.put("repo", "Atema/DD2480-CI");
         build1.put("branch", "main");
         build1.put("time", "07/02/2021, 17:12");
+        build1.put("status", "passed");
 
         Map<String, Object> build2 = new HashMap<>();
         build2.put("id", 2);
         build2.put("repo", "Atema/DD2480-CI");
-        build2.put("branch", "main");
-        build2.put("time", "07/02/2021, 17:16");
+        build2.put("branch", "issue/10");
+        build2.put("time", "07/02/2021, 17:11");
+        build2.put("status", "failed");
+
+        Map<String, Object> build3 = new HashMap<>();
+        build3.put("id", 3);
+        build3.put("repo", "Atema/DD2480-CI");
+        build3.put("branch", "main");
+        build3.put("time", "07/02/2021, 17:10");
+        build3.put("status", "error");
 
         buildList.add(build1);
         buildList.add(build2);
+        buildList.add(build3);
 
         try {
             template.process(dataModel, resp.getWriter());
