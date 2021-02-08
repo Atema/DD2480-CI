@@ -4,7 +4,7 @@ import org.eclipse.jgit.api.errors.JGitInternalException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 /**
  * Contains information needed for the build and methods for building
  */
@@ -46,10 +46,17 @@ public class Build {
     public Path cloneRepo() throws GitAPIException, JGitInternalException, IOException {
         Path p = Files.createTempDirectory("repo");
         System.out.println("Cloning " + cloneURL + " into " + p.toString());
-        Git.cloneRepository().setURI(cloneURL)
-                .setDirectory(p.toFile())
-                // .setDirectory(Paths.get(cloneDirectoryPath).toFile())
-                .call();
+        try{
+
+            Git.cloneRepository().setURI(cloneURL)
+                    .setDirectory(p.toFile())
+                    .setCredentialsProvider(new UsernamePasswordCredentialsProvider("token", EnvVars.getToken()))
+                    // .setDirectory(Paths.get(cloneDirectoryPath).toFile())
+                    .call();
+        }catch (NullPointerException e){
+            System.err.println("no token environment variable");
+            return null;
+        }
         System.out.println("Completed Cloning");
         return p;
     }
