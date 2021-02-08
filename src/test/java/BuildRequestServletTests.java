@@ -15,20 +15,18 @@ public class BuildRequestServletTests {
 
     final String correctJson = "{\n" +
             "  \"ref\": \"refs/heads/testBranchName\",\n" +
-            "  \"commits\": [\n" +
-            "   {\n" +
+            "  \"head_commit\": {\n" +
             "    \"id\": \"abc123\",\n" +
-            "    \"timestamp\": \"20210207\",\n" +
-            "    \"author\": {\n" +
-            "      \"name\": \"AuthorName\",\n" +
-            "       \"email\": \"AuthorName@mail.com\",\n" +
-            "    },\n" +
             " },\n" +
-            "  ],\n" +
             "  \"repository\": {\n" +
             "    \"html_url\": \"https://github.com/Test/testRepoName.git\",\n" +
             "    \"clone_url\": \"https://github.com/Test/testRepoName.git\",\n" +
             "    \"statuses_url\": \"https://github.com/Test/testRepoName.git/statuses/{sha}\",\n" +
+            "    \"pushed_at\": \"20210207\",\n" +
+            "    \"pusher\": {\n" +
+            "      \"name\": \"AuthorName\",\n" +
+            "       \"email\": \"AuthorName@mail.com\",\n" +
+            "    },\n" +
             "  },\n" +
             "}";
 
