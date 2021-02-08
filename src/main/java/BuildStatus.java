@@ -37,7 +37,7 @@ public enum BuildStatus {
      * Returns the BuildStatus from a string created by {@link #toString()}
      *
      * @param label String created by {@link #toString()}
-     * @returns BuildString corresponding to the String (or ERROR)
+     * @return BuildString corresponding to the String (or ERROR)
      */
     public static BuildStatus fromString(String label) {
         if (label.equals(SUCCESS.label)) {
