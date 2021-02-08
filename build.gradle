@@ -30,6 +30,12 @@ dependencies {
     implementation 'org.eclipse.jetty:jetty-server:11.0.0'
     implementation 'org.eclipse.jetty:jetty-servlet:11.0.0'
     implementation 'org.slf4j:slf4j-simple:1.8.0-beta4'
+    
+    compile 'org.apache.directory.studio:org.apache.commons.io:2.4'
+    compile group: 'org.springframework', name: 'spring-test', version: '4.3.0.RELEASE'
+
+    compile group: 'org.json', name: 'json', version: '20180813'
+
     implementation 'org.freemarker:freemarker:2.3.30'
     implementation 'org.xerial:sqlite-jdbc:3.34.0'
 
