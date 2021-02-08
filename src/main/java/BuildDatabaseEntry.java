@@ -1,3 +1,6 @@
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  * Build entry that is retrieved from the database
  */
@@ -48,6 +51,15 @@ public class BuildDatabaseEntry {
      */
     public int getTime() {
         return time;
+    }
+
+    /**
+     * Gets timestamp of build completion as human-readable String
+     *
+     * @return Date-time string
+     */
+    public String getTimeString() {
+        return new SimpleDateFormat("dd/MM/yyyy HH:mm").format(new Date(time));
     }
 
     /**

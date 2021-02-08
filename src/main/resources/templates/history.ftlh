@@ -18,22 +18,22 @@
     <div class="container">
         <div class="row mt-5">
             <div class="mb-4 col-12 col-md-4 col-lg-3">
-                <#list buildList as build>
+                <#list buildList as item>
                     <div class="card mb-3">
                         <div class="card-body">
-                            <h5 class="card-title">${build.branch}
-                                <#if build.status == "passed">
+                            <h5 class="card-title">${item.branch}
+                                <#if item.status == "success">
                                     <span class="badge bg-success float-end">Passed</span>
-                                <#elseif build.status == "failed">
+                                <#elseif item.status == "failure">
                                     <span class="badge bg-danger float-end">Failed</span>
                                 <#else>
                                     <span class="badge bg-warning float-end">Error</span>
                                 </#if>
                             </h5>
-                            <h6 class="card-subtitle mb-2 text-muted">${build.repo}</h6>
+                            <h6 class="card-subtitle mb-2 text-muted">${item.repo}</h6>
                             <p class="card-text">
-                                <small class="text-muted">Finished: ${build.time}</small>
-                                <a href="/?build=${build.id}" class="stretched-link"></a>
+                                <small class="text-muted">Finished: ${item.timeString}</small>
+                                <a href="/?build=${item.id}" class="stretched-link"></a>
                             </p>
                         </div>
                     </div>
@@ -41,24 +41,24 @@
 
             </div>
             <div class="mb-4 col-12 col-md-8 col-lg-9">
-                <#if buildSelected == true>
+                <#if build??>
                     <h4>
-                        <#if status == "passed">
+                        <#if build.status == "success">
                             <span class="badge bg-success">Passed</span>
-                        <#elseif status == "failed">
+                        <#elseif build.status == "failure">
                             <span class="badge bg-danger">Failed</span>
                         <#else>
                             <span class="badge bg-warning">Error</span>
                         </#if>
-                        ${branch}
-                        <span class="text-muted">${repo}</span>
+                        ${build.branch}
+                        <span class="text-muted">${build.repo}</span>
                     </h4>
                     <p>
-                        <span class="text-muted">Commit:</span> ${commit}<br>
-                        <span class="text-muted">Build finished:</span> ${time}
+                        <span class="text-muted">Commit:</span> ${build.sha}<br>
+                        <span class="text-muted">Build finished:</span> ${build.timeString}
                     </p>
                     <h5>Build Log</h5>
-                    <pre class="bg-light" style="white-space: pre-wrap; word-break: break-all;">${log}</pre>
+                    <pre class="bg-light" style="white-space: pre-wrap; word-break: break-all;">${build.log}</pre>
                 <#else>
                     <p class="text-muted">No build selected</p>
                 </#if>
