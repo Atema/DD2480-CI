@@ -1,11 +1,24 @@
 /**
  * Contains information needed for the build and methods for building
  */
-public class Build {
+public class Build { 
+    String branchRef;
+    String idSHA;
+    String url;
+    String nameAuthor;
+    String emailAuthor;
+    String timeStamp;
+
     /**
      * Constructs with properties about what (branch) to clone and build
      */
-    public Build() {
+    public Build(String branchRef,String nameAuthor,String emailAuthor,String idSHA,String url,String timeStamp) {
+        this.branchRef = branchRef;
+        this.idSHA = idSHA;
+        this.url = url;
+        this.nameAuthor = nameAuthor;
+        this.emailAuthor = emailAuthor;
+        this.timeStamp = timeStamp;
     }
 
     /**
