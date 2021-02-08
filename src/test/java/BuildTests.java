@@ -24,7 +24,7 @@ public class BuildTests {
 	@DisplayName("clone repo test")
 	@Test
 	void cloneRepoTest(){
-		Build b = new Build();
+		Build b = new Build("", "", "", "", "", "", "", "");
 		try {
 			Path path = Paths.get(b.cloneRepo());
 			assertTrue(Files.exists(path));
