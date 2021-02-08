@@ -7,7 +7,7 @@ public class EnvVars {
      *
      * @return Value of CI_TOKEN, or null if not set
      */
-    public String getToken() {
+    public static String getToken() {
         return System.getenv("CI_TOKEN");
     }
 }
