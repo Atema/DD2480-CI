@@ -31,28 +31,32 @@ public class BuildRequestServlet extends HttpServlet {
 
         resp.setContentType("text/html;charset=utf-8");
         resp.setStatus(HttpServletResponse.SC_OK);
-        String reqData,branchRef,idSHA,url,nameAuthor,emailAuthor,timeStamp;
-
+         
         try{
-            reqData = req.getReader().lines().collect(Collectors.joining());
-            JSONObject reqObject = new JSONObject(reqData);
-            branchRef = reqObject.getString("ref");  
-            url = reqObject.getJSONObject("repository").getString("html_url");          
-            JSONArray commitArray = reqObject.getJSONArray("commits");
-            idSHA = commitArray.getJSONObject(0).getString("id");
-            nameAuthor = commitArray.getJSONObject(0).getJSONObject("author").getString("name");
-            emailAuthor = commitArray.getJSONObject(0).getJSONObject("author").getString("email");
-            timeStamp = commitArray.getJSONObject(0).getString("timestamp");
+            String reqData = req.getReader().lines().collect(Collectors.joining());
+            Build build = JsonParsing(reqData);
+            build.build();
         }catch (JSONException e) {
             System.err.println(e.getMessage());
             return;
         }
-            
-        Build build = new Build(branchRef,nameAuthor,emailAuthor,idSHA,url,timeStamp);
-
-        build.build();
-
         
+    }
+
+    /**
+     * Json parsing
+     */
+    public static Build JsonParsing(String JsonData){
+        JSONObject reqObject = new JSONObject(JsonData);
+        String branchRef = reqObject.getString("ref");  
+        String url = reqObject.getJSONObject("repository").getString("html_url");          
+        JSONArray commitArray = reqObject.getJSONArray("commits");
+        String idSHA = commitArray.getJSONObject(0).getString("id");
+        String nameAuthor = commitArray.getJSONObject(0).getJSONObject("author").getString("name");
+        String emailAuthor = commitArray.getJSONObject(0).getJSONObject("author").getString("email");
+        String timeStamp = commitArray.getJSONObject(0).getString("timestamp");
+        
+        return new Build(branchRef,nameAuthor,emailAuthor,idSHA,url,timeStamp);
     }
 
 }
