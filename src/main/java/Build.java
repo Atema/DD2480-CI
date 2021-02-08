@@ -12,15 +12,13 @@ public class Build {
     /**
      * Constructs with properties about what (branch) to clone and build
      */
-    public Build(String branchRef,String idSHA,String url,String nameAuthor,
-    String emailAuthor,String timeStamp) {
+    public Build(String branchRef,String nameAuthor,String emailAuthor,String idSHA,String url,String timeStamp) {
         this.branchRef = branchRef;
         this.idSHA = idSHA;
         this.url = url;
         this.nameAuthor = nameAuthor;
         this.emailAuthor = emailAuthor;
         this.timeStamp = timeStamp;
-
     }
 
     /**
