@@ -36,8 +36,8 @@ dependencies {
 
     compile group: 'org.json', name: 'json', version: '20180813'
 
+    implementation 'org.freemarker:freemarker:2.3.30'
     implementation 'org.xerial:sqlite-jdbc:3.34.0'
-
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
