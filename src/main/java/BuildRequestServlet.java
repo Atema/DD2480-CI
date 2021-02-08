@@ -21,7 +21,6 @@ public class BuildRequestServlet extends HttpServlet {
      *
      * @param req: The incoming request
      * @param resp: The returning response
-     * @return 
      */
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -33,7 +32,7 @@ public class BuildRequestServlet extends HttpServlet {
 
         resp.setContentType("text/html;charset=utf-8");
         resp.setStatus(HttpServletResponse.SC_OK);
-         
+
         try{
             String reqData = req.getReader().lines().collect(Collectors.joining());
             Build build = JsonParsing(reqData);
@@ -43,26 +42,26 @@ public class BuildRequestServlet extends HttpServlet {
         }catch (GitAPIException e){
             System.err.println(e.getMessage());
         }
-        
+
     }
 
     /**
      * Helper method for Json parsing, interpretes the Json String and finds the relevant
      * data.
-     * 
+     *
      * @param JsonData String of Jsondata
      * @return Build object when successful otherwise throws error
      */
     public static Build JsonParsing(String JsonData) {
         try{
             JSONObject reqObject = new JSONObject(JsonData);
-            String branchRef = reqObject.getString("ref");  
+            String branchRef = reqObject.getString("ref");
             JSONObject repo = reqObject.getJSONObject("repository");
-            String url = repo.getString("html_url");      
+            String url = repo.getString("html_url");
             String cloneUrl = repo.getString("clone_url");
-            String statusesUrl = repo.getString("statuses_url");  
+            String statusesUrl = repo.getString("statuses_url");
             String nameAuthor = repo.getJSONObject("pusher").getString("name");
-            String emailAuthor = repo.getJSONObject("pusher").getString("email");  
+            String emailAuthor = repo.getJSONObject("pusher").getString("email");
             String timeStamp = repo.getString("pushed_at");
             String idSHA = reqObject.getJSONObject("head_commit").getString("id");
 
@@ -70,7 +69,7 @@ public class BuildRequestServlet extends HttpServlet {
         }catch (JSONException e) {
             throw new JSONException(e);
         }
-        
+
     }
 
 }
