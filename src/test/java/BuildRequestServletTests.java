@@ -27,6 +27,8 @@ public class BuildRequestServletTests {
             "  ],\n" +
             "  \"repository\": {\n" +
             "    \"html_url\": \"https://github.com/Test/testRepoName.git\",\n" +
+            "    \"clone_url\": \"https://github.com/Test/testRepoName.git\",\n" +
+            "    \"statuses_url\": \"https://github.com/Test/testRepoName.git/statuses/{sha}\",\n" +
             "  },\n" +
             "}";
 
@@ -75,6 +77,28 @@ public class BuildRequestServletTests {
     @DisplayName("Test getUrl correct")
     void getUrlTest(){
         assertEquals("https://github.com/Test/testRepoName.git", b.url);
+    }
+
+    /**
+     * Tests that the JSON for Clone url is translated correctly
+     * 
+     * @result true when clone url is correctly read in
+     */
+    @Test
+    @DisplayName("Test getCloneUrl correct")
+    void getCloneUrlTest(){
+        assertEquals("https://github.com/Test/testRepoName.git", b.cloneURL);
+    }
+
+    /**
+     * Tests that the JSON for status url is translated correctly
+     * 
+     * @result true when status url is correctly read in
+     */
+    @Test
+    @DisplayName("Test getStatusUrl correct")
+    void getStatusUrlTest(){
+        assertEquals("https://github.com/Test/testRepoName.git/statuses/{sha}", b.statusURL);
     }
     
     /**

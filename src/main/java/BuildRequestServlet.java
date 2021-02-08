@@ -57,14 +57,17 @@ public class BuildRequestServlet extends HttpServlet {
         try{
             JSONObject reqObject = new JSONObject(JsonData);
             String branchRef = reqObject.getString("ref");  
-            String url = reqObject.getJSONObject("repository").getString("html_url");          
+            JSONObject repo = reqObject.getJSONObject("repository");
+            String url = repo.getString("html_url");      
+            String cloneUrl = repo.getString("clone_url");
+            String statusesUrl = repo.getString("statuses_url");    
             JSONArray commitArray = reqObject.getJSONArray("commits");
             String idSHA = commitArray.getJSONObject(0).getString("id");
             String nameAuthor = commitArray.getJSONObject(0).getJSONObject("author").getString("name");
             String emailAuthor = commitArray.getJSONObject(0).getJSONObject("author").getString("email");
             String timeStamp = commitArray.getJSONObject(0).getString("timestamp");
-        
-            return new Build(branchRef,nameAuthor,emailAuthor,idSHA,url,timeStamp);
+
+            return new Build(branchRef,nameAuthor,emailAuthor,idSHA,url,timeStamp,cloneUrl,statusesUrl);
         }catch (JSONException e) {
             throw new JSONException(e);
         }
