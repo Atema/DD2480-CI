@@ -8,7 +8,7 @@ import java.nio.file.Path;
 /**
  * Contains information needed for the build and methods for building
  */
-public class Build { 
+public class Build {
     String branchRef;
     String idSHA;
     String url;
@@ -43,16 +43,15 @@ public class Build {
      * @return The string corresponding to the path where the repo have been cloned
      *
      */
-    public String cloneRepo() throws GitAPIException, JGitInternalException, IOException {
-        String repoUrl = "https://github.com/Atema/DD2480-CI.git";
+    public Path cloneRepo() throws GitAPIException, JGitInternalException, IOException {
         Path p = Files.createTempDirectory("repo");
-        System.out.println("Cloning " + repoUrl + " into " + p.toString());
-        Git.cloneRepository().setURI(repoUrl)
+        System.out.println("Cloning " + cloneURL + " into " + p.toString());
+        Git.cloneRepository().setURI(cloneURL)
                 .setDirectory(p.toFile())
                 // .setDirectory(Paths.get(cloneDirectoryPath).toFile())
                 .call();
         System.out.println("Completed Cloning");
-        return p.toString();
+        return p;
     }
 
     /**

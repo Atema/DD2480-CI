@@ -24,9 +24,9 @@ public class BuildTests {
 	@DisplayName("clone repo test")
 	@Test
 	void cloneRepoTest(){
-		Build b = new Build();
+		Build b = new Build("", "", "", "", "", "", "https://github.com/Atema/DD2480-CI.git", "");
 		try {
-			Path path = Paths.get(b.cloneRepo());
+			Path path = b.cloneRepo();
 			assertTrue(Files.exists(path));
 		} catch (GitAPIException e) {
 			System.err.println("Exception occurred while cloning repo");
