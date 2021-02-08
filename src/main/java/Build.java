@@ -20,6 +20,16 @@ public class Build {
 
     /**
      * Constructs with properties about what (branch) to clone and build
+     *
+     * @param branchRef reference for the branch
+     * @param nameAuthor name of the author
+     * @param emailAuthor email of the author
+     * @param idSHA id of the SHA
+     * @param url url
+     * @param timeStamp time stamp
+     * @param cloneURL url to clone the repo
+     * @param statusURL url of the status
+     *
      */
     public Build(String branchRef,String nameAuthor,String emailAuthor,String idSHA,String url,
     String timeStamp,String cloneURL, String statusURL) {
