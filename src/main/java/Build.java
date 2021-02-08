@@ -3,7 +3,7 @@
  */
 public class Build { 
     String branchRef;
-    String id;
+    String idSHA;
     String url;
     String nameAuthor;
     String emailAuthor;
@@ -12,10 +12,10 @@ public class Build {
     /**
      * Constructs with properties about what (branch) to clone and build
      */
-    public Build(String branchRef,String id,String url,String nameAuthor,
+    public Build(String branchRef,String idSHA,String url,String nameAuthor,
     String emailAuthor,String timeStamp) {
         this.branchRef = branchRef;
-        this.id = id;
+        this.idSHA = idSHA;
         this.url = url;
         this.nameAuthor = nameAuthor;
         this.emailAuthor = emailAuthor;

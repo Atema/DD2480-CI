@@ -31,15 +31,15 @@ public class BuildRequestServlet extends HttpServlet {
             JSONObject reqObject = new JSONObject(reqData);
             String branchRef = reqObject.getString("ref");            
             JSONArray commitArray = reqObject.getJSONArray("commits");
-            String id = commitArray.getJSONObject(0).getString("id");
+            String idSHA = commitArray.getJSONObject(0).getString("id");
             String url = reqObject.getJSONObject("repository").getString("html_url");
             String nameAuthor = commitArray.getJSONObject(0).getJSONObject("author").getString("name");
             String emailAuthor = commitArray.getJSONObject(0).getJSONObject("author").getString("email");
             String timeStamp = commitArray.getJSONObject(0).getString("timestamp");
 
-            Build build = New Build(branchRef,id,url,nameAuthor,emailAuthor,timeStamp);
+            Build build = New Build(branchRef,idSHA,url,nameAuthor,emailAuthor,timeStamp);
 
-
+            build.build();
 
 
         }
