@@ -32,14 +32,20 @@ public class BuildResult {
      * each contributor is bound by their own bearerToken, registered through Github settings
      */
     public void reportGitHubStatus() {
-        String sha = "toBeImplemented"; // sha is to be imported from build in the futre
+        String sha = "toBeImplemented"; // sha is to be imported from build in the future
         String bearerToken = "toBeImported"; // Each contributor is to create their own token which shall be imported from file
         JSONObject body = new JSONObject();
 
         switch (buildStatus) {
-            case SUCCESS -> body.put("state", "success");
-            case ERROR -> body.put("state", "error");
-            case FAILURE -> body.put("state", "failure");
+            case SUCCESS: 
+                        body.put("state", "success");
+                        break;
+            case ERROR: 
+                        body.put("state", "error");
+                        break;
+            case FAILURE: 
+                        body.put("state", "failure");
+                        break;
         }
         Unirest.setTimeouts(0, 0);
         try {
