@@ -38,7 +38,6 @@ public class BuildRequestServlet extends HttpServlet {
             build.build();
         }catch (JSONException e) {
             System.err.println(e.getMessage());
-            return;
         }
         
     }
@@ -46,17 +45,22 @@ public class BuildRequestServlet extends HttpServlet {
     /**
      * Json parsing
      */
-    public static Build JsonParsing(String JsonData){
-        JSONObject reqObject = new JSONObject(JsonData);
-        String branchRef = reqObject.getString("ref");  
-        String url = reqObject.getJSONObject("repository").getString("html_url");          
-        JSONArray commitArray = reqObject.getJSONArray("commits");
-        String idSHA = commitArray.getJSONObject(0).getString("id");
-        String nameAuthor = commitArray.getJSONObject(0).getJSONObject("author").getString("name");
-        String emailAuthor = commitArray.getJSONObject(0).getJSONObject("author").getString("email");
-        String timeStamp = commitArray.getJSONObject(0).getString("timestamp");
+    public static Build JsonParsing(String JsonData) {
+        try{
+            JSONObject reqObject = new JSONObject(JsonData);
+            String branchRef = reqObject.getString("ref");  
+            String url = reqObject.getJSONObject("repository").getString("html_url");          
+            JSONArray commitArray = reqObject.getJSONArray("commits");
+            String idSHA = commitArray.getJSONObject(0).getString("id");
+            String nameAuthor = commitArray.getJSONObject(0).getJSONObject("author").getString("name");
+            String emailAuthor = commitArray.getJSONObject(0).getJSONObject("author").getString("email");
+            String timeStamp = commitArray.getJSONObject(0).getString("timestamp");
         
-        return new Build(branchRef,nameAuthor,emailAuthor,idSHA,url,timeStamp);
+            return new Build(branchRef,nameAuthor,emailAuthor,idSHA,url,timeStamp);
+        }catch (JSONException e) {
+            throw new JSONException(e);
+        }
+        
     }
 
 }
