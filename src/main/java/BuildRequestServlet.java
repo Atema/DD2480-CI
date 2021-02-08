@@ -43,7 +43,11 @@ public class BuildRequestServlet extends HttpServlet {
     }
 
     /**
-     * Json parsing
+     * Helper method for Json parsing, interpretes the Json String and finds the relevant
+     * data.
+     * 
+     * @param JsonData String of Jsondata
+     * @return Build object when successful otherwise throws error
      */
     public static Build JsonParsing(String JsonData) {
         try{
