@@ -6,7 +6,7 @@ import java.util.Date;
  */
 public class BuildDatabaseEntry {
     private final int id;
-    private final int time;
+    private final long time;
     private final String repo;
     private final String branch;
     private final String sha;
@@ -24,7 +24,7 @@ public class BuildDatabaseEntry {
      * @param status Status of the build process
      * @param log Logs of the build process
      */
-    public BuildDatabaseEntry(int id, int time, String repo, String branch, String sha, BuildStatus status,
+    public BuildDatabaseEntry(int id, long time, String repo, String branch, String sha, BuildStatus status,
             String log) {
         this.id = id;
         this.time = time;
@@ -47,9 +47,9 @@ public class BuildDatabaseEntry {
     /**
      * Gets timestamp of build completion
      *
-     * @return Timestamp
+     * @return Timestamp (in milliseconds)
      */
-    public int getTime() {
+    public long getTime() {
         return time;
     }
 

@@ -63,7 +63,7 @@ public class BuildDatabase {
                 "VALUES (?, ?, ?, ?, ?, ?);"
             );
 
-            query.setInt(1, time);
+            query.setLong(1, time);
             query.setString(2, repo);
             query.setString(3, branch);
             query.setString(4, sha);
@@ -92,7 +92,7 @@ public class BuildDatabase {
             while (rs.next()) {
                 builds.add(new BuildDatabaseEntry(
                     rs.getInt("id"),
-                    rs.getInt("time"),
+                    rs.getLong("time"),
                     rs.getString("repo"),
                     rs.getString("branch"),
                     rs.getString("sha"),
@@ -128,7 +128,7 @@ public class BuildDatabase {
             while (rs.next()) {
                 build = new BuildDatabaseEntry(
                     rs.getInt("id"),
-                    rs.getInt("time"),
+                    rs.getLong("time"),
                     rs.getString("repo"),
                     rs.getString("branch"),
                     rs.getString("sha"),
