@@ -95,29 +95,29 @@ public class Build {
     public BuildResult build(Build b) throws IOException, InterruptedException {
         BuildResult result;
         String buildDirectoryPath;
-        
+
         try{
              buildDirectoryPath = cloneRepo();
         }catch(GitAPIException | JGitInternalException |IOException e){
-            result = new BuildResult(b,GitMessages.ERROR,"Failed to clone repository");
+            result = new BuildResult(b,BuildStatus.ERROR,"Failed to clone repository");
             return result;
         }
 
         Process p = new ProcessBuilder("./gradlew","build").directory(new File(buildDirectoryPath)).start();
-        p.waitFor(); //wait for the process to finish 
-        
-        
+        p.waitFor(); //wait for the process to finish
+
+
         if(p.exitValue() == 0 ){
             InputStream outputBuild = p.getInputStream();
-            result = new BuildResult(b,GitMessages.SUCCESS,convertStreamToString(outputBuild));
-            
+            result = new BuildResult(b,BuildStatus.SUCCESS,convertStreamToString(outputBuild));
+
         }else{
             InputStream outputBuild = p.getErrorStream();
-            result = new BuildResult(b,GitMessages.FAILURE,convertStreamToString(outputBuild));
+            result = new BuildResult(b,BuildStatus.FAILURE,convertStreamToString(outputBuild));
 
         }
 
-        
+
 
         return result;
     }
