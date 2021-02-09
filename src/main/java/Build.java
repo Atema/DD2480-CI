@@ -61,8 +61,6 @@ public class Build {
 
         CloneCommand command = Git.cloneRepository().setURI(cloneURL)
                 .setDirectory(p.toFile());
-
-                // .setDirectory(Paths.get(cloneDirectoryPath).toFile())
         if (EnvVars.getToken() != null){
             command.setCredentialsProvider(new UsernamePasswordCredentialsProvider("token", EnvVars.getToken()));
         }
