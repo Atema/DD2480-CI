@@ -13,7 +13,7 @@ public class BuildResultTests {
     @Test
     void reportGitHubStatusFailureTest() {
         Build build = new Build("", "", "", "fbe20048d0cf2eb2aa28dcd654a33e877c4cd01d", "", "", "", "https://api.github.com/repos/Atema/DD2480-CI/statuses/{sha}");
-        BuildResult buildResult = new BuildResult(build, BuildStatus.FAILURE);
+        BuildResult buildResult = new BuildResult(build, BuildStatus.FAILURE, "");
         String response = buildResult.reportGitHubStatus();
         assertEquals(response, "failure");
 
@@ -23,7 +23,7 @@ public class BuildResultTests {
     @Test
     void reportGitHubStatusSuccessTest() {
         Build build = new Build("", "", "", "fbe20048d0cf2eb2aa28dcd654a33e877c4cd01d", "", "", "", "https://api.github.com/repos/Atema/DD2480-CI/statuses/{sha}");
-        BuildResult buildResult = new BuildResult(build, BuildStatus.SUCCESS);
+        BuildResult buildResult = new BuildResult(build, BuildStatus.SUCCESS, "");
         String response = buildResult.reportGitHubStatus();
         assertEquals(response, "success");
     }
@@ -32,7 +32,7 @@ public class BuildResultTests {
     @Test
     void reportGitHubStatusErrorTest() {
         Build build = new Build("", "", "", "fbe20048d0cf2eb2aa28dcd654a33e877c4cd01d", "", "", "", "https://api.github.com/repos/Atema/DD2480-CI/statuses/{sha}");
-        BuildResult buildResult = new BuildResult(build, BuildStatus.ERROR);
+        BuildResult buildResult = new BuildResult(build, BuildStatus.ERROR, "");
         String response = buildResult.reportGitHubStatus();
         assertEquals(response, "error");
     }
