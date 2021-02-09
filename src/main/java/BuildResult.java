@@ -15,8 +15,8 @@ import org.json.JSONObject;
  * Contains the results of a build, and methods to report them to the user
  */
 public class BuildResult {
-    private final Build build;
-    private final BuildStatus buildStatus;
+    public Build build;
+    public BuildStatus buildStatus;
     public String gitResponse;
 
     /**
@@ -39,13 +39,16 @@ public class BuildResult {
 
         Unirest.setTimeouts(0, 0);
         try {
-            HttpResponse<JsonNode> response = Unirest.post(build.statusURL + build.idSHA)
+            HttpResponse<JsonNode> response = Unirest.post(build.statusURL+ build.idSHA )
                     .header("Authorization", "Bearer" + EnvVars.getToken())
                     .header("Content-Type", "application/json")
                     .body(buildStatus.toString())
                     .asJson();
                     JSONObject myObj = response.getBody().getObject();
-                    gitResponse = myObj.getString("state");
+                    //gitResponse = myObj.getString("state");
+                    System.out.println(myObj.toString());
+                    
+                    
 
                   
 
