@@ -69,8 +69,12 @@ public class Build {
         System.out.println("Completed Cloning");
         return p.toString();
     }
-
-    private String convertStreamToString(InputStream stream){
+    /**
+     * convert the input string into a string 
+     * @param stream to convert into string 
+     * @return the string version of stream 
+     */
+    private static String convertStreamToString(InputStream stream){
         Scanner sc = new Scanner(stream);
         StringBuffer sb = new StringBuffer();
         while(sc.hasNext()){
@@ -91,12 +95,12 @@ public class Build {
      * @throws IOException
      * @throws InterruptedException
      */
-    public BuildResult build(Build b) {
+    public static BuildResult build(Build b) {
         BuildResult result;
         String buildDirectoryPath;
 
         try{
-             buildDirectoryPath = cloneRepo();
+             buildDirectoryPath = b.cloneRepo();
         }catch(GitAPIException | JGitInternalException |IOException e){
             result = new BuildResult(b,BuildStatus.ERROR,e.getMessage());
             return result;

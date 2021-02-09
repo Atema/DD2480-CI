@@ -3,8 +3,8 @@
  */
 public class BuildResult {
     private final Build build;
-    private final BuildStatus buildStatus;
-    private String buildMessage;
+    final BuildStatus buildStatus;
+    String buildMessage;
 
 
     /**
