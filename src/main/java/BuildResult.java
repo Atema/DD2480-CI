@@ -11,9 +11,9 @@ import org.json.JSONObject;
  * Contains the results of a build, and methods to report them to the user
  */
 public class BuildResult {
-    public Build build;
-    public BuildStatus buildStatus;
-    public String gitResponse;
+    private final Build build;
+    final BuildStatus buildStatus;
+    String buildMessage;
 
     /**
      * Constructs with the results
@@ -21,9 +21,10 @@ public class BuildResult {
      * @param build The associated build
      * @param buildStatus The status of the finished build
      */
-    public BuildResult(Build build, BuildStatus buildStatus) {
+    public BuildResult(Build build, BuildStatus buildStatus, String buildMessage) {
         this.build = build;
         this.buildStatus = buildStatus;
+        this.buildMessage = buildMessage;
     }
 
     /**
