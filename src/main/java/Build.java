@@ -1,10 +1,12 @@
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
+import org.eclipse.jgit.api.CloneCommand;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
+
 /**
  * Contains information needed for the build and methods for building
  */
@@ -21,18 +23,18 @@ public class Build {
     /**
      * Constructs with properties about what (branch) to clone and build
      *
-     * @param branchRef reference for the branch
-     * @param nameAuthor name of the author
+     * @param branchRef   reference for the branch
+     * @param nameAuthor  name of the author
      * @param emailAuthor email of the author
-     * @param idSHA id of the SHA
-     * @param url url
-     * @param timeStamp time stamp
-     * @param cloneURL url to clone the repo
-     * @param statusURL url of the status
+     * @param idSHA       id of the SHA
+     * @param url         url
+     * @param timeStamp   time stamp
+     * @param cloneURL    url to clone the repo
+     * @param statusURL   url of the status
      *
      */
-    public Build(String branchRef,String nameAuthor,String emailAuthor,String idSHA,String url,
-    String timeStamp,String cloneURL, String statusURL) {
+    public Build(String branchRef, String nameAuthor, String emailAuthor, String idSHA, String url, String timeStamp,
+            String cloneURL, String statusURL) {
         this.branchRef = branchRef;
         this.idSHA = idSHA;
         this.url = url;
@@ -56,18 +58,18 @@ public class Build {
     public Path cloneRepo() throws GitAPIException, JGitInternalException, IOException {
         Path p = Files.createTempDirectory("repo");
         System.out.println("Cloning " + cloneURL + " into " + p.toString());
-        try{
 
-            Git.cloneRepository().setURI(cloneURL)
-                    .setDirectory(p.toFile())
-                    .setCredentialsProvider(new UsernamePasswordCredentialsProvider("token", EnvVars.getToken()))
-                    // .setDirectory(Paths.get(cloneDirectoryPath).toFile())
-                    .call();
-        }catch (NullPointerException e){
-            System.err.println("no token environment variable");
-            return null;
+        CloneCommand command = Git.cloneRepository().setURI(cloneURL)
+                .setDirectory(p.toFile());
+
+                // .setDirectory(Paths.get(cloneDirectoryPath).toFile())
+        if (EnvVars.getToken() != null){
+            System.out.println("Je passe ici !");
+            command.setCredentialsProvider(new UsernamePasswordCredentialsProvider("token", EnvVars.getToken()));
         }
+        command.call();
         // Git.open(p.toFile()).checkout().setName(this.idSHA).call();
+        System.out.println(EnvVars.getToken());
         System.out.println("Completed Cloning");
         return p;
     }
@@ -75,13 +77,13 @@ public class Build {
     /**
      * Runs the gradle build process (including tests)
      *
-     * @throws GitAPIException throw by cloneRepo
+     * @throws GitAPIException       throw by cloneRepo
      * @throws JGitInternalException throw by cloneRepo
-     * @throws IOException throw by cloneRepo
+     * @throws IOException           throw by cloneRepo
      *
      * @return The results of the build
      */
-    public BuildResult build() throws GitAPIException, JGitInternalException, IOException{
+    public BuildResult build() throws GitAPIException, JGitInternalException, IOException {
         cloneRepo();
 
         // ...
