@@ -66,8 +66,7 @@ public class Build {
         if (EnvVars.getToken() != null){
             command.setCredentialsProvider(new UsernamePasswordCredentialsProvider("token", EnvVars.getToken()));
         }
-        command.call();
-        Git.open(p.toFile()).checkout().setName(this.idSHA).call();
+        command.call().checkout().setName(this.idSHA).call();
         System.out.println("Completed Cloning");
         return p;
     }
