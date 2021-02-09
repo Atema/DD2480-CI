@@ -52,13 +52,13 @@ public class BuildRequestServlet extends HttpServlet {
         try{
             JSONObject reqObject = new JSONObject(JsonData);
             String branchRef = reqObject.getString("ref");
+            String nameAuthor = reqObject.getJSONObject("pusher").getString("name");
+            String emailAuthor = reqObject.getJSONObject("pusher").getString("email");
             JSONObject repo = reqObject.getJSONObject("repository");
             String repoName = repo.getString("full_name");
             String cloneUrl = repo.getString("clone_url");
             String statusesUrl = repo.getString("statuses_url");
-            String nameAuthor = repo.getJSONObject("pusher").getString("name");
-            String emailAuthor = repo.getJSONObject("pusher").getString("email");
-            String timeStamp = repo.getString("pushed_at");
+            long timeStamp = repo.getLong("pushed_at");
             String idSHA = reqObject.getJSONObject("head_commit").getString("id");
             String commitUrl = reqObject.getJSONObject("head_commit").getString("url");
 

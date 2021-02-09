@@ -18,18 +18,18 @@ public class BuildRequestServletTests {
             "  \"head_commit\": {\n" +
             "    \"id\": \"abc123\",\n" +
             "    \"url\": \"https://github.com/Test/testRepoName/commit/abc123\",\n" +
-            " },\n" +
+            "  },\n" +
             "  \"repository\": {\n" +
             "    \"full_name\": \"Test/testRepoName\",\n" +
             "    \"html_url\": \"https://github.com/Test/testRepoName.git\",\n" +
             "    \"clone_url\": \"https://github.com/Test/testRepoName.git\",\n" +
             "    \"statuses_url\": \"https://github.com/Test/testRepoName.git/statuses/{sha}\",\n" +
-            "    \"pushed_at\": \"20210207\",\n" +
-            "    \"pusher\": {\n" +
-            "      \"name\": \"AuthorName\",\n" +
-            "       \"email\": \"AuthorName@mail.com\",\n" +
-            "    },\n" +
             "  },\n" +
+            "  \"pusher\": {\n" +
+            "    \"name\": \"AuthorName\",\n" +
+            "     \"email\": \"AuthorName@mail.com\",\n" +
+            "  },\n" +
+            "  \"pushed_at\": \"20210207\",\n" +
             "}";
 
         final String inCorrectJson = "{\n" +

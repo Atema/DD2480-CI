@@ -27,7 +27,7 @@ public class BuildTests {
 	@DisplayName("clone repo test")
 	@Test
 	void cloneRepoTest(){
-		Build b = new Build("", "", "", "", "a87ca7f2773847a5bf16bd466b1cb3d25af8a10a", "", "", "https://github.com/Atema/DD2480-CI.git", "");
+		Build b = new Build("", "", "", "", "a87ca7f2773847a5bf16bd466b1cb3d25af8a10a", "", 0, "https://github.com/Atema/DD2480-CI.git", "");
 		try {
 			Path path = b.cloneRepo();
 			assertTrue(Files.exists(path));
@@ -51,7 +51,7 @@ public class BuildTests {
 	@DisplayName("True Build Test")
 	@Test
 	void buildTrueTest(){
-		Build b = new Build("", "", "", "", "b87cd13a41e84af77b2d77f8e167b35e5bd8771d", "", "", "https://github.com/Atema/DD2480-CI.git", "");
+		Build b = new Build("", "", "", "", "b87cd13a41e84af77b2d77f8e167b35e5bd8771d", "", 0, "https://github.com/Atema/DD2480-CI.git", "");
 		BuildResult buildRes = b.build();
 		assertEquals(BuildStatus.SUCCESS, buildRes.buildStatus);
         assertNotEquals("", buildRes.buildMessage);
@@ -66,7 +66,7 @@ public class BuildTests {
 	@DisplayName("False Build Test")
 	@Test
 	void buildFalseTest(){
-		Build b = new Build("", "", "", "", "a87ca7f2773847a5bf16bd466b1cb3d25af8a10a", "", "", "https://github.com/Atema/DD2480-CI.git", "");
+		Build b = new Build("", "", "", "", "a87ca7f2773847a5bf16bd466b1cb3d25af8a10a", "", 0, "https://github.com/Atema/DD2480-CI.git", "");
 		BuildResult buildRes = b.build();
 		assertEquals(BuildStatus.FAILURE, buildRes.buildStatus);
         assertNotEquals("", buildRes.buildMessage);

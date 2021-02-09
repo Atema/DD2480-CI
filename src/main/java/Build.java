@@ -20,7 +20,7 @@ public class Build {
     String url;
     String nameAuthor;
     String emailAuthor;
-    String timeStamp;
+    long timeStamp;
     String cloneURL;
     String statusURL;
 
@@ -37,7 +37,7 @@ public class Build {
      * @param statusURL   url of the status
      *
      */
-    public Build(String repoName, String branchRef, String nameAuthor, String emailAuthor, String idSHA, String url, String timeStamp,
+    public Build(String repoName, String branchRef, String nameAuthor, String emailAuthor, String idSHA, String url, long timeStamp,
             String cloneURL, String statusURL) {
         this.repoName = repoName;
         this.branchRef = branchRef;
