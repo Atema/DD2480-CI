@@ -1,38 +1,39 @@
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Contains tests for the {@link BuildResult} class, 
- * In order Failure, Success, Error,
- * The tests can only truly be checked by checking the GitPage.
+ * Contains tests for the {@link BuildResult} class, In order Failure, Success,
+ * Error, The tests can only truly be checked by checking the GitPage.
  */
-@DisplayName("BuildResultTest Failure")
-@Test
-void calculateBuildResultFailureTest(){
-    Build build =  new Build("", "", "", "", "", "", "", "");
-    BuildResult buildResult = new BuildResult(build, BuildStatus.FAILURE);
-    buildResult.reportGitHubStatus();
-    
-    assertEquals(buildResult.gitResponse, "failure");
-    
 
+public class BuildResultTests {
+    @DisplayName("BuildResultTest Failure")
+    @Test
+    void calculateBuildResultFailureTest() {
+        Build build = new Build("", "ebf801a50ba208238effdbce1b05d8950900c138", "https://api.github.com/repos/Atema/DD2480-CI/statuses/", "", "", "", "", "");
+        BuildResult buildResult = new BuildResult(build, BuildStatus.FAILURE);
+        buildResult.reportGitHubStatus();
+        assertEquals(buildResult.gitResponse, "failure");
 
-}
-@DisplayName("BuildResultTest Success")
-@Test
-void calculateBuildResultFailureTest(){
-    Build build =  new Build("", "", "", "", "", "", "", "");
-    BuildResult buildResult = new BuildResult(build, BuildStatus.SUCCESS);
-    buildResult.reportGitHubStatus();
-    JSONobject response = new JSONobject(buildResult.gitResponse);
-    assertEquals(buildResult.gitResponse, "success");
-}
-@DisplayName("BuildResultTest Error")
-@Test
-void calculateBuildResultFailureTest(){
-    Build build =  new Build("", "", "", "", "", "", "", "");
-    BuildResult buildResult = new BuildResult(build, buildStatus.ERROR);
-    buildResult.reportGitHubStatus();
-    JSONobject response = new JSONobject(buildResult.gitResponse);
-    assertEquals(buildResult.gitResponse, "failure"); //both error and return error @github API
+    }
+
+    @DisplayName("BuildResultTest Success")
+    @Test
+    void calculateBuildResultSuccessTest() {
+        Build build = new Build("", "ebf801a50ba208238effdbce1b05d8950900c138", "https://api.github.com/repos/Atema/DD2480-CI/statuses/", "", "", "", "", "");
+        BuildResult buildResult = new BuildResult(build, BuildStatus.SUCCESS);
+        buildResult.reportGitHubStatus();
+        assertEquals(buildResult.gitResponse, "success");
+    }
+
+    @DisplayName("BuildResultTest Error")
+    @Test
+    void calculateBuildResultErrorTest() {
+        Build build = new Build("", "ebf801a50ba208238effdbce1b05d8950900c138", "https://api.github.com/repos/Atema/DD2480-CI/statuses/", "", "", "", "", "");
+        BuildResult buildResult = new BuildResult(build, BuildStatus.ERROR);
+        buildResult.reportGitHubStatus();
+        assertEquals(buildResult.gitResponse, "failure"); // both error and failure return failure @github API
+    }
 }
