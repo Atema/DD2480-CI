@@ -1,14 +1,10 @@
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
-import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.JsonNode;
-//import com.mashape.unirest.http.JsonObject;
-import com.mashape.unirest.http.Unirest;
 
+import org.json.JSONException;
 import org.json.JSONObject;
-
-
 
 
 /**
@@ -23,38 +19,41 @@ public class BuildResult {
      * Constructs with the results
      *
      * @param build The associated build
+     * @param buildStatus The status of the finished build
      */
     public BuildResult(Build build, BuildStatus buildStatus) {
         this.build = build;
         this.buildStatus = buildStatus;
-        this.gitResponse = null;
     }
 
     /**
      * Reports the build result as a status on GitHub, the status reponse from Git
      * is saved in gitResponse.
-     * 
+     *
+     * @return Updated status as reported by GitHub
      */
-    public void reportGitHubStatus() {
+    public String reportGitHubStatus() {
+        JSONObject requestBody = new JSONObject();
+        requestBody.put("context", "DD2480 Gr. 7 CI Server");
+        requestBody.put("state", buildStatus.toString());
 
         Unirest.setTimeouts(0, 0);
         try {
-            HttpResponse<JsonNode> response = Unirest.post(build.statusURL+ build.idSHA )
-                    .header("Authorization", "Bearer" + EnvVars.getToken())
+            HttpResponse<JsonNode> response = Unirest.post(build.statusURL.replace("{sha}", build.idSHA))
+                    .header("Authorization", "Bearer " + EnvVars.getToken())
                     .header("Content-Type", "application/json")
-                    .body(buildStatus.toString())
+                    .body(requestBody)
                     .asJson();
-                    JSONObject myObj = response.getBody().getObject();
-                    //gitResponse = myObj.getString("state");
-                    System.out.println(myObj.toString());
-                    
-                    
 
-                  
+            System.out.println(response.getBody().getObject().toString());
+            return response.getBody().getObject().getString("state");
 
         } catch (UnirestException e) {
             e.printStackTrace();
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
 
+        return null;
     }
 }

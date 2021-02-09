@@ -11,29 +11,29 @@ import org.junit.jupiter.api.Test;
 public class BuildResultTests {
     @DisplayName("BuildResultTest Failure")
     @Test
-    void calculateBuildResultFailureTest() {
-        Build build = new Build("", "", "", "", "fbe20048d0cf2eb2aa28dcd654a33e877c4cd01d", "", "", "https://api.github.com/repos/Atema/DD2480-CI/statuses/{sha}");
+    void reportGitHubStatusFailureTest() {
+        Build build = new Build("", "", "", "fbe20048d0cf2eb2aa28dcd654a33e877c4cd01d", "", "", "", "https://api.github.com/repos/Atema/DD2480-CI/statuses/{sha}");
         BuildResult buildResult = new BuildResult(build, BuildStatus.FAILURE);
-        buildResult.reportGitHubStatus();
-        assertEquals(buildResult.gitResponse, "failure");
+        String response = buildResult.reportGitHubStatus();
+        assertEquals(response, "failure");
 
     }
 
     @DisplayName("BuildResultTest Success")
     @Test
-    void calculateBuildResultSuccessTest() {
-        Build build = new Build("", "", "", "", "fbe20048d0cf2eb2aa28dcd654a33e877c4cd01d", "", "", "https://api.github.com/repos/Atema/DD2480-CI/statuses/{sha}");
+    void reportGitHubStatusSuccessTest() {
+        Build build = new Build("", "", "", "fbe20048d0cf2eb2aa28dcd654a33e877c4cd01d", "", "", "", "https://api.github.com/repos/Atema/DD2480-CI/statuses/{sha}");
         BuildResult buildResult = new BuildResult(build, BuildStatus.SUCCESS);
-        buildResult.reportGitHubStatus();
-        assertEquals(buildResult.gitResponse, "success");
+        String response = buildResult.reportGitHubStatus();
+        assertEquals(response, "success");
     }
 
     @DisplayName("BuildResultTest Error")
     @Test
-    void calculateBuildResultErrorTest() {
+    void reportGitHubStatusErrorTest() {
         Build build = new Build("", "", "", "fbe20048d0cf2eb2aa28dcd654a33e877c4cd01d", "", "", "", "https://api.github.com/repos/Atema/DD2480-CI/statuses/{sha}");
         BuildResult buildResult = new BuildResult(build, BuildStatus.ERROR);
-        buildResult.reportGitHubStatus();
-        assertEquals(buildResult.gitResponse, "error"); // both error and failure return failure @github API
+        String response = buildResult.reportGitHubStatus();
+        assertEquals(response, "error");
     }
 }
