@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.lang.ProcessBuilder;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -7,6 +8,8 @@ import org.eclipse.jgit.api.errors.JGitInternalException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Scanner;
+
 
 /**
  * Contains information needed for the build and methods for building
@@ -68,6 +71,16 @@ public class Build {
         return p.toString();
     }
 
+    private String convertStreamToString(InputStream stream){
+        Scanner sc = new Scanner(stream);
+        StringBuffer sb = new StringBuffer();
+        while(sc.hasNext()){
+            sb.append(sc.nextLine());
+        }
+        sc.close();
+        return sb.toString();
+    }
+
     /**
      * Runs the gradle build process (including tests)
      *
@@ -80,21 +93,32 @@ public class Build {
      * @throws InterruptedException
      */
     public BuildResult build(Build b) throws IOException, InterruptedException {
-        Process p = new ProcessBuilder("./gradlew","check").directory(new File("repo")).start();
-        p.waitFor();
-        
         BuildResult result;
+        String buildDirectoryPath;
+        
+        try{
+             buildDirectoryPath = cloneRepo();
+        }catch(GitAPIException | JGitInternalException |IOException e){
+            result = new BuildResult(b,GitMessages.ERROR,"Failed to clone repository");
+            return result;
+        }
+
+        Process p = new ProcessBuilder("./gradlew","build").directory(new File(buildDirectoryPath)).start();
+        p.waitFor(); //wait for the process to finish 
+        
         
         if(p.exitValue() == 0 ){
-             result = new BuildResult(b,GitMessages.SUCCESS);
+            InputStream outputBuild = p.getInputStream();
+            result = new BuildResult(b,GitMessages.SUCCESS,convertStreamToString(outputBuild));
             
         }else{
-            result = new BuildResult(b,GitMessages.FAILURE);
+            InputStream outputBuild = p.getErrorStream();
+            result = new BuildResult(b,GitMessages.FAILURE,convertStreamToString(outputBuild));
 
         }
 
         
 
-        return null;
+        return result;
     }
 }

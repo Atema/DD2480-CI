@@ -16,15 +16,18 @@ enum GitMessages {
 public class BuildResult {
     private final Build build;
     private final GitMessages buildStatus;
+    private String buildMessage;
+ 
 
     /**
      * Constructs with the results
      *
      * @param build The associated build
      */
-    public BuildResult(Build build, GitMessages buildStatus) {
+    public BuildResult(Build build, GitMessages buildStatus, String buildMessage) {
         this.build = build;
         this.buildStatus = buildStatus;
+        this.buildMessage = buildMessage;
 
     }
 
