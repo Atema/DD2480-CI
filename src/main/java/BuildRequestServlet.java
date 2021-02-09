@@ -39,8 +39,6 @@ public class BuildRequestServlet extends HttpServlet {
             build.build();
         }catch (JSONException e) {
             System.err.println(e.getMessage());
-        }catch (GitAPIException e){
-            System.err.println(e.getMessage());
         }
 
     }
