@@ -3,56 +3,38 @@ import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
 import org.json.JSONObject;
 
-enum GitMessages {
-    SUCCESS,
-    FAILURE,
-    ERROR,
-}
-
-
 /**
  * Contains the results of a build, and methods to report them to the user
  */
 public class BuildResult {
     private final Build build;
-    private final GitMessages buildStatus;
+    private final BuildStatus buildStatus;
 
     /**
      * Constructs with the results
      *
      * @param build The associated build
      */
-    public BuildResult(Build build, GitMessages buildStatus) {
+    public BuildResult(Build build, BuildStatus buildStatus) {
         this.build = build;
         this.buildStatus = buildStatus;
     }
 
     /**
      * Reports the build result as a status on GitHub,
-     * each contributor is bound by their own bearerToken, registered through Github settings
+     * @param URL and @param idSHA are from the belonging build class,
+     * @param bearerToken is imported from environment variable,
+     * @param buildstatus reports the success, failure or error of the build to Github API.
+     * 
      */
     public void reportGitHubStatus() {
-        String sha = "toBeImplemented"; // sha is to be imported from build in the future
-        String bearerToken = "toBeImported"; // Each contributor is to create their own token which shall be imported from file
-        JSONObject body = new JSONObject();
-
-        switch (buildStatus) {
-            case SUCCESS: 
-                        body.put("state", "success");
-                        break;
-            case ERROR: 
-                        body.put("state", "error");
-                        break;
-            case FAILURE: 
-                        body.put("state", "failure");
-                        break;
         }
         Unirest.setTimeouts(0, 0);
         try {
-            HttpResponse<String> response = Unirest.post("https://api.github.com/repos/Atema/DD2480-CI/statuses/" + sha)
-                    .header("Authorization", "Bearer " + bearerToken) //bearer token to be imported, see line 35
+            HttpResponse<String> response = Unirest.post(""+ this.build.statusURL + this.build.idSHA)
+                    .header("Authorization", "Bearer " + EnvVars.getToken()) //bearer token to be imported, see line 35
                     .header("Content-Type", "application/json")
-                    .body(body.toString())
+                    .body(buildStatus.toString())
                     .asString();
 
         } catch (UnirestException e) {
