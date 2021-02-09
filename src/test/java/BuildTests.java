@@ -24,7 +24,7 @@ public class BuildTests {
 	@DisplayName("clone repo test")
 	@Test
 	void cloneRepoTest(){
-		Build b = new Build("", "", "", "", "", "", "https://github.com/Atema/DD2480-CI.git", "");
+		Build b = new Build("", "", "", "a87ca7f2773847a5bf16bd466b1cb3d25af8a10a", "", "", "https://github.com/Atema/DD2480-CI.git", "");
 		try {
 			Path path = b.cloneRepo();
 			assertTrue(Files.exists(path));
