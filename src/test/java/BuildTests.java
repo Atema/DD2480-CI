@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.nio.file.Paths;
 
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
@@ -45,9 +44,9 @@ public class BuildTests {
 		}
 	}
 	/**
-	 * Test function for the method build with a commit known to be successful when built 
-	 * 
-	 * @result true if the build is successful  
+	 * Test function for the method build with a commit known to be successful when built
+	 *
+	 * @result true if the build is successful
 	 */
 	@DisplayName("True Build Test")
 	@Test
@@ -61,8 +60,8 @@ public class BuildTests {
 
 	/**
 	 * Test function for the method build with a commit known to be unsuccessful when built
-	 * 
-	 * @result true if the build is unsuccesful 
+	 *
+	 * @result true if the build is unsuccesful
 	 */
 	@DisplayName("False Build Test")
 	@Test

@@ -8,8 +8,6 @@ import java.util.stream.Collectors;
 import jakarta.servlet.ServletException;
 import org.json.*;
 
-import org.eclipse.jgit.api.errors.GitAPIException;
-
 /**
  * Servlet that handles build requests (on /request) that are triggered by GitHub
  */

@@ -32,20 +32,12 @@ dependencies {
     implementation 'org.slf4j:slf4j-simple:1.8.0-beta4'
     implementation 'com.mashape.unirest:unirest-java:1.4.9'
     implementation 'org.json:json:20201115'
-    
-    compile 'org.apache.directory.studio:org.apache.commons.io:2.4'
-    compile group: 'org.springframework', name: 'spring-test', version: '4.3.0.RELEASE'
-
-    compile group: 'org.json', name: 'json', version: '20180813'
-
     implementation 'org.freemarker:freemarker:2.3.30'
     implementation 'org.xerial:sqlite-jdbc:3.34.0'
+    implementation 'org.eclipse.jgit:org.eclipse.jgit:5.10.0.202012080955-r'
 
     testImplementation 'org.junit.jupiter:junit-jupiter-api:5.6.0'
     testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
-
-    // https://mvnrepository.com/artifact/org.eclipse.jgit/org.eclipse.jgit
-    implementation 'org.eclipse.jgit:org.eclipse.jgit:5.10.0.202012080955-r'
 }
 
 test {

@@ -1,4 +1,3 @@
-import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ProcessBuilder;
@@ -74,9 +73,9 @@ public class Build {
     }
 
     /**
-     * convert the input string into a string 
-     * @param stream to convert into string 
-     * @return the string version of stream 
+     * convert the input string into a string
+     * @param stream to convert into string
+     * @return the string version of stream
      */
     private String convertStreamToString(InputStream stream){
         Scanner sc = new Scanner(stream);
@@ -90,7 +89,7 @@ public class Build {
 
     /**
      * Runs the gradle build process (including tests)
-     * 
+     *
      * @return The results of the build
      */
     public BuildResult build() {
@@ -105,7 +104,7 @@ public class Build {
         }
         String operSys = System.getProperty("os.name").toLowerCase();
         ProcessBuilder p;
-        
+
         if (operSys.contains("win")) {
                 p = new ProcessBuilder("./gradlew.bat","build").directory(buildDirectoryPath.toFile());
         }else{
@@ -118,7 +117,7 @@ public class Build {
 
         try{
              pr = p.start();
-             pr.waitFor(); //wait for the process to finish 
+             pr.waitFor(); //wait for the process to finish
 
         }catch(InterruptedException | IOException e ){
             System.out.println(e.getMessage());
@@ -127,10 +126,10 @@ public class Build {
         }
 
         InputStream outputBuild = pr.getInputStream();
-        
+
         if(pr.exitValue() == 0 ){
             result = new BuildResult(this,BuildStatus.SUCCESS,convertStreamToString(outputBuild));
-            
+
         }else{
             result = new BuildResult(this,BuildStatus.FAILURE,convertStreamToString(outputBuild));
 
