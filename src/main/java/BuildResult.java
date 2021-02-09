@@ -9,6 +9,7 @@ import org.json.JSONObject;
 public class BuildResult {
     private final Build build;
     private final BuildStatus buildStatus;
+    private String gitResponse;
 
     /**
      * Constructs with the results
@@ -18,6 +19,7 @@ public class BuildResult {
     public BuildResult(Build build, BuildStatus buildStatus) {
         this.build = build;
         this.buildStatus = buildStatus;
+        this.gitResponse = null;
     }
 
     /**
@@ -31,7 +33,7 @@ public class BuildResult {
         }
         Unirest.setTimeouts(0, 0);
         try {
-            HttpResponse<String> response = Unirest.post(""+ this.build.statusURL + this.build.idSHA)
+            HttpResponse<String> response = Unirest.post(build.statusURL.replace("{sha}", build.idSHA))
                     .header("Authorization", "Bearer " + EnvVars.getToken()) //bearer token to be imported, see line 35
                     .header("Content-Type", "application/json")
                     .body(buildStatus.toString())
@@ -40,6 +42,11 @@ public class BuildResult {
         } catch (UnirestException e) {
             e.printStackTrace();
         }
+        JSONobject responseJSON = new JSONobject(response);
+        gitResponse = responseJSON.getString("status");
+
+       
+        
 
 
     }
