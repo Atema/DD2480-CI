@@ -64,12 +64,10 @@ public class Build {
 
                 // .setDirectory(Paths.get(cloneDirectoryPath).toFile())
         if (EnvVars.getToken() != null){
-            System.out.println("Je passe ici !");
             command.setCredentialsProvider(new UsernamePasswordCredentialsProvider("token", EnvVars.getToken()));
         }
         command.call();
-        // Git.open(p.toFile()).checkout().setName(this.idSHA).call();
-        System.out.println(EnvVars.getToken());
+        Git.open(p.toFile()).checkout().setName(this.idSHA).call();
         System.out.println("Completed Cloning");
         return p;
     }
