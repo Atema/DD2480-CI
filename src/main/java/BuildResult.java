@@ -1,9 +1,15 @@
 import com.mashape.unirest.http.HttpResponse;
 import com.mashape.unirest.http.Unirest;
 import com.mashape.unirest.http.exceptions.UnirestException;
+import com.mashape.unirest.http.HttpResponse;
+import com.mashape.unirest.http.JsonNode;
+//import com.mashape.unirest.http.JsonObject;
+import com.mashape.unirest.http.Unirest;
+
 import org.json.JSONObject;
 
-import netscape.javascript.JSObject;
+
+
 
 /**
  * Contains the results of a build, and methods to report them to the user
@@ -29,23 +35,23 @@ public class BuildResult {
      * is saved in gitResponse.
      * 
      */
-    public <JSONobject> void reportGitHubStatus() {
+    public void reportGitHubStatus() {
 
         Unirest.setTimeouts(0, 0);
         try {
-            HttpResponse<String> response = Unirest.post(build.statusURL.replace("{sha}", build.idSHA))
-                    .header("Authorization", "Bearer " + EnvVars.getToken()) // bearer token to be imported, see line 35
-                    .header("Content-Type", "application/json").body(buildStatus.toString()).asString();
+            HttpResponse<JsonNode> response = Unirest.post(build.statusURL + build.idSHA)
+                    .header("Authorization", "Bearer" + EnvVars.getToken())
+                    .header("Content-Type", "application/json")
+                    .body(buildStatus.toString())
+                    .asJson();
+                    JSONObject myObj = response.getBody().getObject();
+                    gitResponse = myObj.getString("state");
+
+                  
 
         } catch (UnirestException e) {
             e.printStackTrace();
         }
-        JSONobject responseJSON = new JSONObject(response);
-        gitResponse = responseJSON.getString("status");
-
-       
-        
-
 
     }
 }
