@@ -8,7 +8,8 @@ import org.eclipse.jgit.api.errors.JGitInternalException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
-
+import org.eclipse.jgit.api.CloneCommand;
+import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
 
 /**
  * Contains information needed for the build and methods for building
@@ -26,18 +27,18 @@ public class Build {
     /**
      * Constructs with properties about what (branch) to clone and build
      *
-     * @param branchRef reference for the branch
-     * @param nameAuthor name of the author
+     * @param branchRef   reference for the branch
+     * @param nameAuthor  name of the author
      * @param emailAuthor email of the author
-     * @param idSHA id of the SHA
-     * @param url url
-     * @param timeStamp time stamp
-     * @param cloneURL url to clone the repo
-     * @param statusURL url of the status
+     * @param idSHA       id of the SHA
+     * @param url         url
+     * @param timeStamp   time stamp
+     * @param cloneURL    url to clone the repo
+     * @param statusURL   url of the status
      *
      */
-    public Build(String branchRef,String nameAuthor,String emailAuthor,String idSHA,String url,
-    String timeStamp,String cloneURL, String statusURL) {
+    public Build(String branchRef, String nameAuthor, String emailAuthor, String idSHA, String url, String timeStamp,
+            String cloneURL, String statusURL) {
         this.branchRef = branchRef;
         this.idSHA = idSHA;
         this.url = url;
@@ -58,23 +59,26 @@ public class Build {
      * @return The string corresponding to the path where the repo have been cloned
      *
      */
-    public String cloneRepo() throws GitAPIException, JGitInternalException, IOException {
-        String repoUrl = "https://github.com/Atema/DD2480-CI.git";
+    public Path cloneRepo() throws GitAPIException, JGitInternalException, IOException {
         Path p = Files.createTempDirectory("repo");
-        System.out.println("Cloning " + repoUrl + " into " + p.toString());
-        Git.cloneRepository().setURI(repoUrl)
-                .setDirectory(p.toFile())
-                // .setDirectory(Paths.get(cloneDirectoryPath).toFile())
-                .call();
+        System.out.println("Cloning " + cloneURL + " into " + p.toString());
+
+        CloneCommand command = Git.cloneRepository().setURI(cloneURL)
+                .setDirectory(p.toFile());
+        if (EnvVars.getToken() != null){
+            command.setCredentialsProvider(new UsernamePasswordCredentialsProvider("token", EnvVars.getToken()));
+        }
+        command.call().checkout().setName(this.idSHA).call();
         System.out.println("Completed Cloning");
-        return p.toString();
+        return p;
     }
+
     /**
      * convert the input string into a string 
      * @param stream to convert into string 
      * @return the string version of stream 
      */
-    private static String convertStreamToString(InputStream stream){
+    private String convertStreamToString(InputStream stream){
         Scanner sc = new Scanner(stream);
         StringBuffer sb = new StringBuffer();
         while(sc.hasNext()){
@@ -86,27 +90,28 @@ public class Build {
 
     /**
      * Runs the gradle build process (including tests)
-     *
-     * @throws GitAPIException throw by cloneRepo
-     * @throws JGitInternalException throw by cloneRepo
-     * @throws IOException throw by cloneRepo
-     *
+     * 
      * @return The results of the build
-     * @throws IOException
-     * @throws InterruptedException
      */
-    public static BuildResult build(Build b) {
+    public BuildResult build() {
         BuildResult result;
-        String buildDirectoryPath;
+        Path buildDirectoryPath;
 
         try{
-             buildDirectoryPath = b.cloneRepo();
+             buildDirectoryPath = this.cloneRepo();
         }catch(GitAPIException | JGitInternalException |IOException e){
-            result = new BuildResult(b,BuildStatus.ERROR,e.getMessage());
+            result = new BuildResult(this,BuildStatus.ERROR,e.getMessage());
             return result;
         }
+        String operSys = System.getProperty("os.name").toLowerCase();
+        ProcessBuilder p;
+        
+        if (operSys.contains("win")) {
+                p = new ProcessBuilder("./gradlew.bat","build").directory(buildDirectoryPath.toFile());
+        }else{
+                p = new ProcessBuilder("./gradlew","build").directory(buildDirectoryPath.toFile());
 
-        ProcessBuilder p = new ProcessBuilder("./gradlew","build").directory(new File(buildDirectoryPath));
+        }
         p.redirectErrorStream(true);
 
         Process pr ;
@@ -116,17 +121,18 @@ public class Build {
              pr.waitFor(); //wait for the process to finish 
 
         }catch(InterruptedException | IOException e ){
-            result = new BuildResult(b,BuildStatus.ERROR,e.getMessage());
+            System.out.println(e.getMessage());
+            result = new BuildResult(this,BuildStatus.ERROR,e.getMessage());
             return result;
         }
 
         InputStream outputBuild = pr.getInputStream();
         
         if(pr.exitValue() == 0 ){
-            result = new BuildResult(b,BuildStatus.SUCCESS,convertStreamToString(outputBuild));
+            result = new BuildResult(this,BuildStatus.SUCCESS,convertStreamToString(outputBuild));
             
         }else{
-            result = new BuildResult(b,BuildStatus.FAILURE,convertStreamToString(outputBuild));
+            result = new BuildResult(this,BuildStatus.FAILURE,convertStreamToString(outputBuild));
 
         }
 

@@ -28,9 +28,9 @@ public class BuildTests {
 	@DisplayName("clone repo test")
 	@Test
 	void cloneRepoTest(){
-
+		Build b = new Build("", "", "", "a87ca7f2773847a5bf16bd466b1cb3d25af8a10a", "", "", "https://github.com/Atema/DD2480-CI.git", "");
 		try {
-			Path path = Paths.get(Build.cloneRepo());
+			Path path = b.cloneRepo();
 			assertTrue(Files.exists(path));
 		} catch (GitAPIException e) {
 			System.err.println("Exception occurred while cloning repo");
@@ -45,30 +45,30 @@ public class BuildTests {
 		}
 	}
 	/**
-	 * Test function for the method build
+	 * Test function for the method build with a commit known to be successful when built 
 	 * 
-	 * @result true if the build is succesful 
+	 * @result true if the build is successful  
 	 */
 	@DisplayName("True Build Test")
 	@Test
 	void buildTrueTest(){
-		Build b = new Build("", "", "", "", "", "", "", "");
-		BuildResult buildRes = Build.build(b);
+		Build b = new Build("", "", "", "b87cd13a41e84af77b2d77f8e167b35e5bd8771d", "", "", "https://github.com/Atema/DD2480-CI.git", "");
+		BuildResult buildRes = b.build();
 		assertEquals(BuildStatus.SUCCESS, buildRes.buildStatus);
-        assertEquals("", buildRes.buildMessage);
+        assertNotEquals("", buildRes.buildMessage);
 	}
 
 
 	/**
-	 * Test function for the method build
+	 * Test function for the method build with a commit known to be unsuccessful when built
 	 * 
 	 * @result true if the build is unsuccesful 
 	 */
 	@DisplayName("False Build Test")
 	@Test
 	void buildFalseTest(){
-		Build b = new Build("", "", "", "", "", "", "", "");
-		BuildResult buildRes = Build.build(b);
+		Build b = new Build("", "", "", "a87ca7f2773847a5bf16bd466b1cb3d25af8a10a", "", "", "https://github.com/Atema/DD2480-CI.git", "");
+		BuildResult buildRes = b.build();
 		assertEquals(BuildStatus.FAILURE, buildRes.buildStatus);
         assertNotEquals("", buildRes.buildMessage);
 
