@@ -20,6 +20,7 @@ public class BuildResult {
      *
      * @param build The associated build
      * @param buildStatus The status of the finished build
+     * @param buildMessage The log of the finished build
      */
     public BuildResult(Build build, BuildStatus buildStatus, String buildMessage) {
         this.build = build;
