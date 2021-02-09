@@ -14,6 +14,7 @@ import org.eclipse.jgit.transport.UsernamePasswordCredentialsProvider;
  * Contains information needed for the build and methods for building
  */
 public class Build {
+    String repoName;
     String branchRef;
     String idSHA;
     String url;
@@ -30,14 +31,15 @@ public class Build {
      * @param nameAuthor  name of the author
      * @param emailAuthor email of the author
      * @param idSHA       id of the SHA
-     * @param url         url
+     * @param url         url of the commit
      * @param timeStamp   time stamp
      * @param cloneURL    url to clone the repo
      * @param statusURL   url of the status
      *
      */
-    public Build(String branchRef, String nameAuthor, String emailAuthor, String idSHA, String url, String timeStamp,
+    public Build(String repoName, String branchRef, String nameAuthor, String emailAuthor, String idSHA, String url, String timeStamp,
             String cloneURL, String statusURL) {
+        this.repoName = repoName;
         this.branchRef = branchRef;
         this.idSHA = idSHA;
         this.url = url;

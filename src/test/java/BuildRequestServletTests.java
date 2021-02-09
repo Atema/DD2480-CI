@@ -17,8 +17,10 @@ public class BuildRequestServletTests {
             "  \"ref\": \"refs/heads/testBranchName\",\n" +
             "  \"head_commit\": {\n" +
             "    \"id\": \"abc123\",\n" +
+            "    \"url\": \"https://github.com/Test/testRepoName/commit/abc123\",\n" +
             " },\n" +
             "  \"repository\": {\n" +
+            "    \"full_name\": \"Test/testRepoName\",\n" +
             "    \"html_url\": \"https://github.com/Test/testRepoName.git\",\n" +
             "    \"clone_url\": \"https://github.com/Test/testRepoName.git\",\n" +
             "    \"statuses_url\": \"https://github.com/Test/testRepoName.git/statuses/{sha}\",\n" +
@@ -56,8 +58,19 @@ public class BuildRequestServletTests {
     }
 
     /**
+     * Test that the JSON for repoName is translated correctly
+     *
+     * @result true when repoName is correctly read in
+     */
+    @Test
+    @DisplayName("Test repoName correct")
+    void getRepoNameTest() {
+        assertEquals("Test/testRepoName", b.repoName);
+    }
+
+    /**
      * Tests that the JSON for ref is translated correctly
-     * 
+     *
      * @result true when branchRef is correctly read in
      */
     @Test
@@ -67,19 +80,8 @@ public class BuildRequestServletTests {
     }
 
     /**
-     * Tests that the JSON for url is translated correctly
-     * 
-     * @result true when url is correctly read in
-     */
-    @Test
-    @DisplayName("Test getUrl correct")
-    void getUrlTest(){
-        assertEquals("https://github.com/Test/testRepoName.git", b.url);
-    }
-
-    /**
      * Tests that the JSON for Clone url is translated correctly
-     * 
+     *
      * @result true when clone url is correctly read in
      */
     @Test
@@ -90,7 +92,7 @@ public class BuildRequestServletTests {
 
     /**
      * Tests that the JSON for status url is translated correctly
-     * 
+     *
      * @result true when status url is correctly read in
      */
     @Test
@@ -98,10 +100,10 @@ public class BuildRequestServletTests {
     void getStatusUrlTest(){
         assertEquals("https://github.com/Test/testRepoName.git/statuses/{sha}", b.statusURL);
     }
-    
+
     /**
      * Tests that the JSON for idSHA is translated correctly
-     * 
+     *
      * @result true when idSHA is correctly read in
      */
     @Test
@@ -111,8 +113,19 @@ public class BuildRequestServletTests {
     }
 
     /**
+     * Test that the JSON for url is translated correctly
+     *
+     * @result true when url is correctly read in
+     */
+    @Test
+    @DisplayName("Test getUrl correct")
+    void getUrlTest() {
+        assertEquals("https://github.com/Test/testRepoName/commit/abc123", b.url);
+    }
+
+    /**
      * Tests that the JSON for name is translated correctly
-     * 
+     *
      * @result true when name is correctly read in
      */
     @Test
@@ -123,7 +136,7 @@ public class BuildRequestServletTests {
 
     /**
      * Tests that the JSON for email is translated correctly
-     * 
+     *
      * @result true when email is correctly read in
      */
     @Test
@@ -131,10 +144,10 @@ public class BuildRequestServletTests {
     void getAuthorEmailTest(){
         assertEquals("AuthorName@mail.com", b.emailAuthor);
     }
-    
+
     /**
      * Tests that the JSON for timestamp is translated correctly
-     * 
+     *
      * @result true when timestamp is correctly read in
      */
     @Test
@@ -145,7 +158,7 @@ public class BuildRequestServletTests {
 
     /**
      * Tests that incorrect JSON throws error
-     * 
+     *
      * @result throws JSONException
      */
     @Test
@@ -156,7 +169,7 @@ public class BuildRequestServletTests {
 
     /**
      * Tests that empty/incorrect JSON throws error
-     * 
+     *
      * @result throws JSONException
      */
     @Test
