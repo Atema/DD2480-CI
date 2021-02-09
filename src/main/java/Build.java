@@ -92,32 +92,40 @@ public class Build {
      * @throws IOException
      * @throws InterruptedException
      */
-    public BuildResult build(Build b) throws IOException, InterruptedException {
+    public BuildResult build(Build b) {
         BuildResult result;
         String buildDirectoryPath;
-        
+
         try{
              buildDirectoryPath = cloneRepo();
         }catch(GitAPIException | JGitInternalException |IOException e){
-            result = new BuildResult(b,GitMessages.ERROR,"Failed to clone repository");
+            result = new BuildResult(b,GitMessages.ERROR,e.getMessage());
             return result;
         }
 
-        Process p = new ProcessBuilder("./gradlew","build").directory(new File(buildDirectoryPath)).start();
-        p.waitFor(); //wait for the process to finish 
+        ProcessBuilder p = new ProcessBuilder("./gradlew","build").directory(new File(buildDirectoryPath));
+        p.redirectErrorStream(true);
+
+        Process pr ;
+
+        try{
+             pr = p.start();
+             pr.waitFor(); //wait for the process to finish 
+
+        }catch(InterruptedException | IOException e ){
+            result = new BuildResult(b,GitMessages.ERROR,e.getMessage());
+            return result;
+        }
+
+        InputStream outputBuild = pr.getInputStream();
         
-        
-        if(p.exitValue() == 0 ){
-            InputStream outputBuild = p.getInputStream();
+        if(pr.exitValue() == 0 ){
             result = new BuildResult(b,GitMessages.SUCCESS,convertStreamToString(outputBuild));
             
         }else{
-            InputStream outputBuild = p.getErrorStream();
             result = new BuildResult(b,GitMessages.FAILURE,convertStreamToString(outputBuild));
 
         }
-
-        
 
         return result;
     }
