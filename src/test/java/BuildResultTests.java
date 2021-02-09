@@ -2,23 +2,28 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 /**
- * Contains tests for the {@link BuildResult} class
+ * Contains tests for the {@link BuildResult} class, 
+ * In order Failure, Success, Error,
+ * The tests can only truly be checked by checking the GitPage.
  */
 @DisplayName("BuildResultTest Failure")
 @Test
 void calculateBuildResultFailureTest(){
-    BuildResult buildResult = new BuildResult(null, GitMessages.FAILURE);
+    Build build =  new Build("", "", "", "", "", "", "", "");
+    BuildResult buildResult = new BuildResult(build, BuildStatus.FAILURE);
     buildResult.reportGitHubStatus();
 }
 @DisplayName("BuildResultTest Success")
 @Test
 void calculateBuildResultFailureTest(){
-    BuildResult buildResult = new BuildResult(null, GitMessages.SUCCESS);
+    Build build =  new Build("", "", "", "", "", "", "", "");
+    BuildResult buildResult = new BuildResult(build, BuildStatus.SUCCESS);
     buildResult.reportGitHubStatus();
 }
 @DisplayName("BuildResultTest Error")
 @Test
 void calculateBuildResultFailureTest(){
-    BuildResult buildResult = new BuildResult(null, GitMessages.ERROR);
+    Build build =  new Build("", "", "", "", "", "", "", "");
+    BuildResult buildResult = new BuildResult(build, buildStatus.ERROR);
     buildResult.reportGitHubStatus();
 }
