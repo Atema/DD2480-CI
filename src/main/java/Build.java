@@ -5,7 +5,6 @@ import java.lang.ProcessBuilder;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.api.errors.JGitInternalException;
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Scanner;
@@ -99,7 +98,7 @@ public class Build {
         try{
              buildDirectoryPath = cloneRepo();
         }catch(GitAPIException | JGitInternalException |IOException e){
-            result = new BuildResult(b,GitMessages.ERROR,e.getMessage());
+            result = new BuildResult(b,BuildStatus.ERROR,e.getMessage());
             return result;
         }
 
@@ -113,17 +112,17 @@ public class Build {
              pr.waitFor(); //wait for the process to finish 
 
         }catch(InterruptedException | IOException e ){
-            result = new BuildResult(b,GitMessages.ERROR,e.getMessage());
+            result = new BuildResult(b,BuildStatus.ERROR,e.getMessage());
             return result;
         }
 
         InputStream outputBuild = pr.getInputStream();
         
         if(pr.exitValue() == 0 ){
-            result = new BuildResult(b,GitMessages.SUCCESS,convertStreamToString(outputBuild));
+            result = new BuildResult(b,BuildStatus.SUCCESS,convertStreamToString(outputBuild));
             
         }else{
-            result = new BuildResult(b,GitMessages.FAILURE,convertStreamToString(outputBuild));
+            result = new BuildResult(b,BuildStatus.FAILURE,convertStreamToString(outputBuild));
 
         }
 
