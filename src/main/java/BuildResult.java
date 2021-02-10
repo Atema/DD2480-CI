@@ -30,8 +30,8 @@ public class BuildResult {
 
     /**
      * Reports the build result as a status on GitHub, the status reponse from Git
-     * is saved in gitResponse.
-     *
+     * is returned in a string
+     * 
      * @return Updated status as reported by GitHub
      */
     public String reportGitHubStatus() {
