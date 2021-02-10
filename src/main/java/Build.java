@@ -27,7 +27,7 @@ public class Build {
 
     /**
      * Constructs with properties about what (branch) to clone and build
-     *
+     * @param repoName    repository name 
      * @param branchRef   reference for the branch
      * @param nameAuthor  name of the author
      * @param emailAuthor email of the author
