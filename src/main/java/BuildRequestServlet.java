@@ -37,6 +37,7 @@ public class BuildRequestServlet extends HttpServlet {
             BuildResult result = build.build();
             result.addToDatabase();
             result.reportGitHubStatus();
+            System.out.println("Request received");
         }catch (JSONException e) {
             System.err.println(e.getMessage());
         }

@@ -118,6 +118,7 @@ public class Build {
         Process pr ;
 
         try{
+            System.out.println("Build started");
              pr = p.start();
              pr.waitFor(); //wait for the process to finish
 
@@ -136,7 +137,7 @@ public class Build {
             result = new BuildResult(this,BuildStatus.FAILURE,convertStreamToString(outputBuild));
 
         }
-
+        System.out.println("Build completed");
         return result;
     }
 }
