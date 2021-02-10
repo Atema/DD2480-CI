@@ -32,6 +32,7 @@
                             </h5>
                             <h6 class="card-subtitle mb-2 text-muted">${item.repo}</h6>
                             <p class="card-text">
+                                ${item.message}<br>
                                 <small class="text-muted">Finished: ${item.timeString}</small>
                                 <a href="/?build=${item.id}" class="stretched-link"></a>
                             </p>
@@ -53,8 +54,10 @@
                         ${build.branch}
                         <span class="text-muted">${build.repo}</span>
                     </h4>
+                    <p>${build.message}</p>
                     <p>
-                        <span class="text-muted">Commit:</span> ${build.sha}<br>
+                        <span class="text-muted">Commit:</span> <a href="${build.url}">${build.sha}</a><br>
+                        <span class="text-muted">Pusher:</span> ${build.name} (${build.email})<br>
                         <span class="text-muted">Build finished:</span> ${build.timeString}
                     </p>
                     <h5>Build Log</h5>
