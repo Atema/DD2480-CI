@@ -46,6 +46,7 @@ public class BuildResult {
                     .header("Content-Type", "application/json")
                     .body(requestBody)
                     .asJson();
+
             return response.getBody().getObject().getString("state");
 
         } catch (UnirestException e) {
