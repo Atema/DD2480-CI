@@ -1,3 +1,4 @@
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.ProcessBuilder;
@@ -27,7 +28,7 @@ public class Build {
 
     /**
      * Constructs with properties about what (branch) to clone and build
-     * @param repoName    repository name 
+     * @param repoName    repository name
      * @param branchRef   reference for the branch
      * @param nameAuthor  name of the author
      * @param emailAuthor email of the author
@@ -112,10 +113,9 @@ public class Build {
         ProcessBuilder p;
 
         if (operSys.contains("win")) {
-                p = new ProcessBuilder("./gradlew.bat","build").directory(buildDirectoryPath.toFile());
+                p = new ProcessBuilder(new File(buildDirectoryPath.toFile(), "gradlew.bat").toString(), "build").directory(buildDirectoryPath.toFile());
         }else{
-                p = new ProcessBuilder("./gradlew","build").directory(buildDirectoryPath.toFile());
-
+                p = new ProcessBuilder(new File(buildDirectoryPath.toFile(), "gradlew").toString(), "build").directory(buildDirectoryPath.toFile());
         }
         p.redirectErrorStream(true);
 
