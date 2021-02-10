@@ -47,7 +47,6 @@ public class BuildResult {
                     .body(requestBody)
                     .asJson();
 
-            System.out.println(response.getBody().getObject().toString());
             return response.getBody().getObject().getString("state");
 
         } catch (UnirestException e) {
