@@ -27,6 +27,7 @@ public class BuildRequestServlet extends HttpServlet {
             resp.sendError(HttpServletResponse.SC_NOT_FOUND);
             return;
         }
+        System.out.println("Request received");
 
         resp.setContentType("text/html;charset=utf-8");
         resp.setStatus(HttpServletResponse.SC_OK);
@@ -37,7 +38,6 @@ public class BuildRequestServlet extends HttpServlet {
             BuildResult result = build.build();
             result.addToDatabase();
             result.reportGitHubStatus();
-            System.out.println("Request received");
         }catch (JSONException e) {
             System.err.println(e.getMessage());
         }
