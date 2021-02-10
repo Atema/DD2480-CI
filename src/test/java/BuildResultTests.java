@@ -11,6 +11,9 @@ import org.junit.jupiter.api.Test;
 public class BuildResultTests {
     @DisplayName("BuildResultTest Failure")
     @Test
+    /**
+     * Test function for the method reportGitHubStatus with a BuildStatus that should fail
+     */
     void reportGitHubStatusFailureTest() {
         Build build = new Build("", "", "", "", "fbe20048d0cf2eb2aa28dcd654a33e877c4cd01d", "", 0, "", "https://api.github.com/repos/Atema/DD2480-CI/statuses/{sha}","");
         BuildResult buildResult = new BuildResult(build, BuildStatus.FAILURE, "");
@@ -21,6 +24,9 @@ public class BuildResultTests {
 
     @DisplayName("BuildResultTest Success")
     @Test
+    /**
+     * Test function for the method reportGitHubStatus with a BuildStatus that should return Success
+     */
     void reportGitHubStatusSuccessTest() {
         Build build = new Build("", "", "", "", "fbe20048d0cf2eb2aa28dcd654a33e877c4cd01d", "", 0, "", "https://api.github.com/repos/Atema/DD2480-CI/statuses/{sha}","");
         BuildResult buildResult = new BuildResult(build, BuildStatus.SUCCESS, "");
@@ -30,6 +36,9 @@ public class BuildResultTests {
 
     @DisplayName("BuildResultTest Error")
     @Test
+    /**
+     * Test function for the method reportGitHubStatus with a BuildStatus that should return error
+     */
     void reportGitHubStatusErrorTest() {
         Build build = new Build("", "", "", "", "fbe20048d0cf2eb2aa28dcd654a33e877c4cd01d", "", 0, "", "https://api.github.com/repos/Atema/DD2480-CI/statuses/{sha}","");
         BuildResult buildResult = new BuildResult(build, BuildStatus.ERROR, "");
