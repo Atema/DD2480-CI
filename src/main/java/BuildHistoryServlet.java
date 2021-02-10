@@ -19,6 +19,9 @@ public class BuildHistoryServlet extends HttpServlet {
     private final Configuration cfg;
     private final BuildDatabase db;
 
+    /**
+     * Creates a build history servlet 
+     */
     public BuildHistoryServlet() {
         cfg = new Configuration(Configuration.VERSION_2_3_30);
         cfg.setClassForTemplateLoading(getClass(), "/templates");
