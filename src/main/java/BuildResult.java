@@ -30,8 +30,8 @@ public class BuildResult {
 
     /**
      * Reports the build result as a status on GitHub, the status reponse from Git
-     * is saved in gitResponse.
-     *
+     * is returned in a string
+     * 
      * @return Updated status as reported by GitHub
      */
     public String reportGitHubStatus() {
@@ -46,8 +46,6 @@ public class BuildResult {
                     .header("Content-Type", "application/json")
                     .body(requestBody)
                     .asJson();
-
-            System.out.println(response.getBody().getObject().toString());
             return response.getBody().getObject().getString("state");
 
         } catch (UnirestException e) {
