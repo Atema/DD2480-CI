@@ -31,7 +31,7 @@ public class BuildResult {
     /**
      * Reports the build result as a status on GitHub, the status reponse from Git
      * is returned in a string
-     * 
+     *
      * @return Updated status as reported by GitHub
      */
     public String reportGitHubStatus() {
@@ -58,6 +58,9 @@ public class BuildResult {
         return null;
     }
 
+    /**
+     * Add the build to the database
+     */
     public void addToDatabase() {
         BuildDatabase db = new BuildDatabase();
 
