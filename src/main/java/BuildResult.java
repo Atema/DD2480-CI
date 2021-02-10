@@ -58,4 +58,10 @@ public class BuildResult {
 
         return null;
     }
+
+    public void addToDatabase() {
+        BuildDatabase db = new BuildDatabase();
+
+        db.insertBuild(build.timeStamp * 1000, build.repoName, build.branchRef.replace("refs/heads/", ""), build.idSHA, buildStatus, buildMessage);
+    }
 }

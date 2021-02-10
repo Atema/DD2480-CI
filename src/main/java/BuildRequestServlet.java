@@ -34,7 +34,9 @@ public class BuildRequestServlet extends HttpServlet {
         try{
             String reqData = req.getReader().lines().collect(Collectors.joining());
             Build build = JsonParsing(reqData);
-            build.build();
+            BuildResult result = build.build();
+            result.addToDatabase();
+            result.reportGitHubStatus();
         }catch (JSONException e) {
             System.err.println(e.getMessage());
         }

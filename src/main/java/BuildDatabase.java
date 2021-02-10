@@ -56,7 +56,7 @@ public class BuildDatabase {
      * @param status Status of the build process
      * @param log Logs of the build process
      */
-    public void insertBuild(int time, String repo, String branch, String sha, BuildStatus status, String log) {
+    public void insertBuild(long time, String repo, String branch, String sha, BuildStatus status, String log) {
         try (Connection conn = DriverManager.getConnection(url)) {
             PreparedStatement query = conn.prepareStatement(
                 "INSERT INTO builds (time, repo, branch, sha, status, log) " +
