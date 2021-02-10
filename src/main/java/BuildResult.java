@@ -31,7 +31,7 @@ public class BuildResult {
     /**
      * Reports the build result as a status on GitHub, the status reponse from Git
      * is returned in a string
-     * 
+     *
      * @return Updated status as reported by GitHub
      */
     public String reportGitHubStatus() {
@@ -61,6 +61,6 @@ public class BuildResult {
     public void addToDatabase() {
         BuildDatabase db = new BuildDatabase();
 
-        db.insertBuild(build.timeStamp * 1000, build.repoName, build.branchRef.replace("refs/heads/", ""), build.idSHA, buildStatus, buildMessage);
+        db.insertBuild(build.timeStamp * 1000, build.repoName, build.branchRef.replace("refs/heads/", ""), build.idSHA, build.url, build.commitMessage, build.nameAuthor, build.emailAuthor, buildStatus, buildMessage);
     }
 }

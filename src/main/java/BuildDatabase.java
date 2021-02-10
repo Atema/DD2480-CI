@@ -11,7 +11,7 @@ import java.util.List;
  * Implements a SQLite database that contains the build history
  */
 public class BuildDatabase {
-    private final String url;
+    private final String dbUrl;
 
     /**
      * Constructs the database using an SQLite file in a subfolder of the user home,
@@ -21,9 +21,9 @@ public class BuildDatabase {
         File directory = new File(System.getProperty("user.home"), ".ciserver");
         directory.mkdir();
 
-        url = "jdbc:sqlite:" + (new File(directory, "history.db")).getPath();
+        dbUrl = "jdbc:sqlite:" + (new File(directory, "history2.db")).getPath();
 
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = DriverManager.getConnection(dbUrl)) {
             // Executes the query for creating the builds table, if non-existent
             conn.createStatement().execute(
                 "CREATE TABLE IF NOT EXISTS builds (" +
@@ -32,6 +32,10 @@ public class BuildDatabase {
                     "repo TEXT," +
                     "branch TEXT," +
                     "sha TEXT," +
+                    "url TEXT," +
+                    "message TEXT," +
+                    "name TEXT," +
+                    "email TEXT," +
                     "status TEXT," +
                     "log TEXT" +
                 ");"
@@ -53,22 +57,30 @@ public class BuildDatabase {
      * @param repo Repository linked to the build
      * @param branch Branch the build commit was in
      * @param sha SHA hash of the commit
+     * @param url URL to the commit page
+     * @param message Commit message
+     * @param name Name of the pusher
+     * @param email Email of the pusher
      * @param status Status of the build process
      * @param log Logs of the build process
      */
-    public void insertBuild(long time, String repo, String branch, String sha, BuildStatus status, String log) {
-        try (Connection conn = DriverManager.getConnection(url)) {
+    public void insertBuild(long time, String repo, String branch, String sha, String url, String message, String name, String email, BuildStatus status, String log) {
+        try (Connection conn = DriverManager.getConnection(dbUrl)) {
             PreparedStatement query = conn.prepareStatement(
-                "INSERT INTO builds (time, repo, branch, sha, status, log) " +
-                "VALUES (?, ?, ?, ?, ?, ?);"
+                "INSERT INTO builds (time, repo, branch, sha, url, message, name, email, status, log) " +
+                "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);"
             );
 
             query.setLong(1, time);
             query.setString(2, repo);
             query.setString(3, branch);
             query.setString(4, sha);
-            query.setString(5, status.toString());
-            query.setString(6, log);
+            query.setString(5, url);
+            query.setString(6, message);
+            query.setString(7, name);
+            query.setString(8, email);
+            query.setString(9, status.toString());
+            query.setString(10, log);
 
             query.executeUpdate();
         } catch (SQLException e) {
@@ -84,7 +96,7 @@ public class BuildDatabase {
     public List<BuildDatabaseEntry> getAllBuilds() {
         List<BuildDatabaseEntry> builds = new ArrayList<>();
 
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = DriverManager.getConnection(dbUrl)) {
             ResultSet rs = conn.createStatement().executeQuery(
                 "SELECT * FROM builds ORDER BY time DESC;"
             );
@@ -96,6 +108,10 @@ public class BuildDatabase {
                     rs.getString("repo"),
                     rs.getString("branch"),
                     rs.getString("sha"),
+                    rs.getString("url"),
+                    rs.getString("message"),
+                    rs.getString("name"),
+                    rs.getString("email"),
                     BuildStatus.fromString(rs.getString("status")),
                     rs.getString("log")
                 ));
@@ -116,7 +132,7 @@ public class BuildDatabase {
     public BuildDatabaseEntry getBuild(int id) {
         BuildDatabaseEntry build = null;
 
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = DriverManager.getConnection(dbUrl)) {
             PreparedStatement query = conn.prepareStatement(
                 "SELECT * FROM builds WHERE id = ?;"
             );
@@ -132,6 +148,10 @@ public class BuildDatabase {
                     rs.getString("repo"),
                     rs.getString("branch"),
                     rs.getString("sha"),
+                    rs.getString("url"),
+                    rs.getString("message"),
+                    rs.getString("name"),
+                    rs.getString("email"),
                     BuildStatus.fromString(rs.getString("status")),
                     rs.getString("log")
                 );
@@ -149,7 +169,7 @@ public class BuildDatabase {
      * @param id Id of the build to delete
      */
     public void deleteBuild(int id) {
-        try (Connection conn = DriverManager.getConnection(url)) {
+        try (Connection conn = DriverManager.getConnection(dbUrl)) {
             PreparedStatement query = conn.prepareStatement(
                 "DELETE FROM builds WHERE id = ?;"
             );
