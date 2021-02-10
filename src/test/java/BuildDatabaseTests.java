@@ -13,7 +13,7 @@ import org.junit.jupiter.api.Test;
 public class BuildDatabaseTests {
     /**
      * Tests retrieval ({@link BuildDatabase#getBuild(int)} and {@link BuildDatabase#getAllBuilds()}), insertion
-     * ({@link BuildDatabase#insertBuild(int, String, String, String, BuildStatus, String)}) and deletion
+     * ({@link BuildDatabase#insertBuild(long, String, String, String, String, String, String, String, BuildStatus, String)}) and deletion
      * ({@link BuildDatabase#deleteBuild(int)}) of entries in the database.
      */
     @Test
@@ -23,7 +23,7 @@ public class BuildDatabaseTests {
 
         List<BuildDatabaseEntry> beforeInsert = db.getAllBuilds();
 
-        db.insertBuild(-1, "Test/Repo", "testBranch", "commit_sha", BuildStatus.SUCCESS, "");
+        db.insertBuild(-1, "Test/Repo", "testBranch", "commit_sha", "http://github.com/commit_sha", "A commit message!", "A name", "An email", BuildStatus.SUCCESS, "");
 
         List<BuildDatabaseEntry> afterInsert = db.getAllBuilds();
 

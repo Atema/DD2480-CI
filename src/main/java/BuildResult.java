@@ -64,6 +64,6 @@ public class BuildResult {
     public void addToDatabase() {
         BuildDatabase db = new BuildDatabase();
 
-        db.insertBuild(build.timeStamp * 1000, build.repoName, build.branchRef.replace("refs/heads/", ""), build.idSHA, buildStatus, buildMessage);
+        db.insertBuild(build.timeStamp * 1000, build.repoName, build.branchRef.replace("refs/heads/", ""), build.idSHA, build.url, build.commitMessage, build.nameAuthor, build.emailAuthor, buildStatus, buildMessage);
     }
 }

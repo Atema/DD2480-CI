@@ -10,6 +10,10 @@ public class BuildDatabaseEntry {
     private final String repo;
     private final String branch;
     private final String sha;
+    private final String url;
+    private final String message;
+    private final String name;
+    private final String email;
     private final BuildStatus status;
     private final String log;
 
@@ -21,16 +25,24 @@ public class BuildDatabaseEntry {
      * @param repo Repository linked to the build
      * @param branch Branch the build commit was in
      * @param sha SHA hash of the commit
+     * @param url URL of the commit page
+     * @param message Commit message
+     * @param name Name of the pusher
+     * @param email Email of the pusher
      * @param status Status of the build process
      * @param log Logs of the build process
      */
-    public BuildDatabaseEntry(int id, long time, String repo, String branch, String sha, BuildStatus status,
-            String log) {
+    public BuildDatabaseEntry(int id, long time, String repo, String branch, String sha, String url, String message,
+            String name, String email, BuildStatus status, String log) {
         this.id = id;
         this.time = time;
         this.repo = repo;
         this.branch = branch;
         this.sha = sha;
+        this.url = url;
+        this.message = message;
+        this.name = name;
+        this.email = email;
         this.status = status;
         this.log = log;
     }
@@ -90,6 +102,42 @@ public class BuildDatabaseEntry {
     }
 
     /**
+     * Gets the URL of the commit page
+     *
+     * @return URL
+     */
+    public String getUrl() {
+        return url;
+    }
+
+    /**
+     * Gets the commit message
+     *
+     * @return Commit message
+     */
+    public String getMessage() {
+        return message;
+    }
+
+    /**
+     * Gets the pusher name
+     *
+     * @return Name
+     */
+    public String getName() {
+        return name;
+    }
+
+    /**
+     * Gets the pusher email
+     *
+     * @return Email
+     */
+    public String getEmail() {
+        return email;
+    }
+
+    /**
      * Gets status of the build process
      *
      * @return Status
@@ -130,6 +178,8 @@ public class BuildDatabaseEntry {
 
         BuildDatabaseEntry entry = (BuildDatabaseEntry) other;
 
-        return id == entry.getId() && time == entry.getTime() && repo.equals(entry.getRepo()) && branch.equals(entry.getBranch()) && sha.equals(entry.getSha()) && status == entry.getStatus() && log.equals(entry.getLog());
+        return id == entry.getId() && time == entry.getTime() && repo.equals(entry.getRepo()) && branch.equals(entry.getBranch()) && sha.equals(entry.getSha()) &&
+                url.equals(entry.getUrl()) && message.equals(entry.getMessage()) && name.equals(entry.getName()) && email.equals(entry.getEmail()) &&
+                status == entry.getStatus() && log.equals(entry.getLog());
     }
 }
