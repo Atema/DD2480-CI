@@ -23,6 +23,7 @@ public class Build {
     long timeStamp;
     String cloneURL;
     String statusURL;
+    String commitMessage;
 
     /**
      * Constructs with properties about what (branch) to clone and build
@@ -35,10 +36,11 @@ public class Build {
      * @param timeStamp   time stamp
      * @param cloneURL    url to clone the repo
      * @param statusURL   url of the status
+     * @param commitMessage message of the commit
      *
      */
     public Build(String repoName, String branchRef, String nameAuthor, String emailAuthor, String idSHA, String url, long timeStamp,
-            String cloneURL, String statusURL) {
+            String cloneURL, String statusURL, String commitMessage) {
         this.repoName = repoName;
         this.branchRef = branchRef;
         this.idSHA = idSHA;
@@ -48,6 +50,7 @@ public class Build {
         this.timeStamp = timeStamp;
         this.cloneURL = cloneURL;
         this.statusURL = statusURL;
+        this.commitMessage = commitMessage;
     }
 
     /**

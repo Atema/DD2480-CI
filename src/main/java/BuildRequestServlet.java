@@ -61,10 +61,12 @@ public class BuildRequestServlet extends HttpServlet {
             String cloneUrl = repo.getString("clone_url");
             String statusesUrl = repo.getString("statuses_url");
             long timeStamp = repo.getLong("pushed_at");
-            String idSHA = reqObject.getJSONObject("head_commit").getString("id");
-            String commitUrl = reqObject.getJSONObject("head_commit").getString("url");
+            JSONObject headCommit = reqObject.getJSONObject("head_commit");
+            String idSHA = headCommit.getString("id");
+            String commitUrl = headCommit.getString("url");
+            String commitMessage = headCommit.getString("message");
 
-            return new Build(repoName,branchRef,nameAuthor,emailAuthor,idSHA,commitUrl,timeStamp,cloneUrl,statusesUrl);
+            return new Build(repoName,branchRef,nameAuthor,emailAuthor,idSHA,commitUrl,timeStamp,cloneUrl,statusesUrl,commitMessage);
         }catch (JSONException e) {
             throw new JSONException(e);
         }
