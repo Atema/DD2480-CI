@@ -87,6 +87,7 @@ public class Build {
         StringBuffer sb = new StringBuffer();
         while(sc.hasNext()){
             sb.append(sc.nextLine());
+            sb.append(System.getProperty("line.separator"));
         }
         sc.close();
         return sb.toString();
