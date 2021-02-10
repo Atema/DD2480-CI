@@ -18,8 +18,10 @@ public class BuildRequestServletTests {
             "  \"head_commit\": {\n" +
             "    \"id\": \"abc123\",\n" +
             "    \"url\": \"https://github.com/Test/testRepoName/commit/abc123\",\n" +
+            "    \"message\": \"my first commit\",\n" +
             "  },\n" +
             "  \"repository\": {\n" +
+            "    \"pushed_at\": \"20210207\",\n" +
             "    \"full_name\": \"Test/testRepoName\",\n" +
             "    \"html_url\": \"https://github.com/Test/testRepoName.git\",\n" +
             "    \"clone_url\": \"https://github.com/Test/testRepoName.git\",\n" +
@@ -29,7 +31,6 @@ public class BuildRequestServletTests {
             "    \"name\": \"AuthorName\",\n" +
             "     \"email\": \"AuthorName@mail.com\",\n" +
             "  },\n" +
-            "  \"pushed_at\": \"20210207\",\n" +
             "}";
 
         final String inCorrectJson = "{\n" +
@@ -153,7 +154,18 @@ public class BuildRequestServletTests {
     @Test
     @DisplayName("Test getTimestamp correct")
     void getTimeStampTest(){
-        assertEquals("20210207", b.timeStamp);
+        assertEquals(20210207, b.timeStamp);
+    }
+
+    /**
+     * Tests that the JSON for timestamp is translated correctly
+     *
+     * @result true when timestamp is correctly read in
+     */
+    @Test
+    @DisplayName("Test getCommitMessage correct")
+    void getCommitMessageTest(){
+        assertEquals("my first commit", b.commitMessage);
     }
 
     /**
