@@ -17,6 +17,6 @@ public class BuildStatusTests {
         assertEquals(BuildStatus.SUCCESS, BuildStatus.fromString(BuildStatus.SUCCESS.toString()));
         assertEquals(BuildStatus.FAILURE, BuildStatus.fromString(BuildStatus.FAILURE.toString()));
         assertEquals(BuildStatus.ERROR, BuildStatus.fromString(BuildStatus.ERROR.toString()));
-        assertEquals(BuildStatus.ERROR, BuildStatus.fromString("Nonsensical input"));
+        assertEquals(BuildStatus.FAILURE, BuildStatus.fromString("Nonsensical input"));
     }
 }
